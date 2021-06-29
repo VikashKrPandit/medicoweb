@@ -46,6 +46,7 @@ export class UtilService {
   public stripeCode: any;
 
   public paypal: any;
+  public pscimage: any;
   public paypalCode: any;
 
   public razor: any;

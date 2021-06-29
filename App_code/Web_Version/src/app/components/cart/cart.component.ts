@@ -98,6 +98,7 @@ export class CartComponent implements OnInit {
   cvc: any = '';
   date: any = '';
   email: any = '';
+  pscimage: any = '';
   constructor(
     private router: Router,
     public api: ApiService,
@@ -123,7 +124,44 @@ export class CartComponent implements OnInit {
 
     this.today = moment().format('dddd, MMMM Do YYYY');
     this.nextDay = moment().add(1, 'days').format('dddd, MMMM Do YYYY');
+    this.pscimage = '';
   }
+
+  // Start prescription
+  prescriptionUpload(files) {
+    console.log('fle', files);
+    if (files.length === 0) {
+      return;
+    }
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    if (files) {
+      console.log('ok');
+      this.util.start();
+      this.api.uploadFile(files).subscribe((data: any) => {
+        console.log('==>>', data);
+        this.util.stop();
+        if (data && data.status === 200 && data.data) {
+          this.util.pscimage = data.data
+        }
+      }, err => {
+        console.log(err);
+        this.util.stop();
+      });
+    } else {
+      console.log('no');
+    }
+  }
+
+  getProfile() {
+    // return this.util.userInfo && this.util.userInfo.cover ? this.api.mediaURL + this.util.userInfo.cover : '';
+    // console.log('this.util==========>', this.util)
+    return this.util.pscimage
+  }
+  // End prescription
 
   ngOnInit(): void {
   }
@@ -590,7 +628,8 @@ export class CartComponent implements OnInit {
       pay_key: payKey,
       status: JSON.stringify(orderStatus),
       assignee: '',
-      extra: JSON.stringify(this.cart.userOrderTaxByStores)
+      extra: JSON.stringify(this.cart.userOrderTaxByStores),
+      pscimage: this.util.pscimage
     }
 
     console.log('param----->', param);
@@ -1097,7 +1136,10 @@ export class CartComponent implements OnInit {
       this.tabID = 3;
     } else if (!this.selectedAddress) {
       this.util.errorMessage(this.util.translate('Please select address'));
+    } else if (!this.util.pscimage) {
+      this.util.errorMessage(this.util.translate('Please upload prescription'));
     }
+    console.log('this.util.pscimage--------------', this.util)
     this.smoothScrollTop();
     this.cart.calcuate();
   }
