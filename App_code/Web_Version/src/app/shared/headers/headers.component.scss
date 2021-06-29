@@ -11,7 +11,9 @@
 .upper_div {
   background-color: $theme-color;
   width: 100%;
-  height: 70px;
+  position: relative;
+    top: 20px;
+    height: 90px;
   display: flex;
   align-items: center;
 
@@ -69,7 +71,7 @@
   }
 }
 .lower_div {
-  background-color: #f3f3f3;
+  background-color: #442c9e;
   width: 100%;
   height: 50px;
   display: flex;
@@ -83,7 +85,33 @@
     font-size: 14px;
 
     a {
-      color: black !important;
+      color: white !important;
+    }
+
+    button {
+      text-transform: capitalize;
+    }
+  }
+}
+
+.lower_divsub {
+  background-color: #ffffff;
+  width: 100%;
+  word-spacing: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+
+
+  li {
+    cursor: pointer;
+    color: black;
+    padding-right: 15px;
+    padding-left: 15px;
+    font-size: 14px;
+
+    a {
+      color:#ffffff !important;
     }
 
     button {

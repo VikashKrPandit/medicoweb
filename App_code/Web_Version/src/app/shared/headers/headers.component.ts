@@ -34,23 +34,31 @@ export class HeadersComponent implements OnInit {
 
   terms: any = '';
   products: any[] = [];
-
+  dummyBottomCates = Array(2);
+  dummyCates = Array(30);
   cities: any[] = [];
   cityName: any = '';
   dummy = Array(5);
   cityId: any;
   categories: any[] = [];
+  subcategories: any[] =[];
+  bottomcategory: any[] = [];
   languageClicked: boolean = false;
   constructor(
     private router: Router,
     public api: ApiService,
     public util: UtilService,
+
     public cart: CartService) {
     this.router.events.subscribe(() => {
       this.products = [];
       this.terms = '';
+
     })
+    this.dummyCates = Array(30);
+    this.dummyBottomCates = Array(2);
     this.dummyLang = Array(5);
+
     this.selectedLanguage = 'English';
     setTimeout(() => {
       this.getCities();
@@ -110,10 +118,12 @@ export class HeadersComponent implements OnInit {
           list.forEach(sub => {
             if (element.id === sub.cate_id) {
               this.categories[index].sub.push(sub);
+              this.subcategories.push({...sub, 'categories':element});
             }
           });
         });
         console.log('all cates', this.categories);
+        console.log('all cates', this.subcategories);
       }
     }, error => {
       console.log(error);
@@ -354,5 +364,79 @@ export class HeadersComponent implements OnInit {
     const name = item.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
     const sub_name = sub.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();
     this.router.navigate([]).then(result => { console.log('result', result); window.open('sub/' + item.id + '/' + name + '/' + sub.id + '/' + sub_name, '_blank'); });
+  }
+
+  subCate(item) {
+    console.log(item);
+    const name = item.name.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase();;
+    this.router.navigate(['categories', item.id, name]);
+  }
+  getCategorys() {
+    this.dummyCates = Array(30);
+    this.categories = [];
+    this.api.get('categories').then((datas: any) => {
+      console.log('categories', datas);
+      this.dummyCates = [];
+      const cates = [];
+      if (datas && datas.data && datas.data.length) {
+        datas.data.forEach(element => {
+          if (element.status === '1') {
+            const info = {
+              id: element.id,
+              name: element.name,
+              cover: element.cover,
+            };
+            const data = {
+              id: element.id,
+              name: element.name,
+              cover: element.cover,
+              subCates: []
+            };
+            cates.push(data);
+            this.categories.push(info);
+          }
+        });
+
+        this.api.get('subcate').then((subCates: any) => {
+          console.log('sub cates', subCates);
+          if (subCates && subCates.status === 200 && subCates.data && subCates.data.length) {
+            cates.forEach((element, i) => {
+              subCates.data.forEach(sub => {
+                if (sub.status === '1' && element.id === sub.cate_id) {
+                  cates[i].subCates.push(sub);
+                }
+              });
+            });
+            // console.log('=>>', this.categories);
+            this.dummyBottomCates = [];
+            this.bottomcategory = cates;
+            console.log('bottomcategory cates==========>', this.bottomcategory);
+          } else {
+            this.dummyBottomCates = [];
+          }
+        }, error => {
+          console.log(error);
+          this.util.errorMessage(this.util.translate('Something went wrong'));
+          this.dummyBottomCates = [];
+        }).catch(error => {
+          console.log(error);
+          this.util.errorMessage(this.util.translate('Something went wrong'));
+          this.dummyBottomCates = [];
+        });
+      } else {
+        this.dummyCates = [];
+        this.dummyBottomCates = [];
+      }
+    }, error => {
+      console.log(error);
+      this.util.errorMessage(this.util.translate('Something went wrong'));
+      this.dummyCates = [];
+      this.dummyBottomCates = [];
+    }).catch(error => {
+      console.log(error);
+      this.util.errorMessage(this.util.translate('Something went wrong'));
+      this.dummyCates = [];
+      this.dummyBottomCates = [];
+    });
   }
 }

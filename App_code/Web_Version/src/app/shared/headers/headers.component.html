@@ -199,7 +199,7 @@
           </li>
         </ul>
 
-        <ul class="navbar-nav" *ngFor="let item of categories | slice:0:5">
+        <!-- <ul class="navbar-nav" *ngFor="let item of categories | slice:0:5">
           <li class="nav-item dropdown" dropdown style="padding: 0; padding-left: 15px;padding-right: 15px;">
             <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle" mdbWavesEffect>
               {{item.name}} <span class="caret"></span>
@@ -209,7 +209,59 @@
                 (click)="subItems(item,sub)">{{sub.name}} </a>
             </div>
           </li>
+        </ul> -->
+        <ul class="navbar-nav" *ngFor="let item of categories| slice:0:5">
+          <li class="nav-item "  style="padding: 0; padding-left: 15px;padding-right: 15px;">
+            <a  mdbWavesEffect type="button" class="nav-link" mdbWavesEffect (click)="subCate(item)" >
+              {{item.name}} <span class="caret"></span>
+            </a>
+            <!-- <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+              <a class="dropdown-item waves-light" mdbWavesEffect *ngFor="let sub of item.sub"
+                (click)="subItems(item,sub)">{{sub.name}} </a>
+            </div> -->
+          </li>
         </ul>
+
+      </links>
+    </div>
+  </div>
+
+  <div class="lower_divsub">
+    <div class="container">
+      <links>
+        <!-- <ul class="navbar-nav">
+          <li class="nav-item dropdown" dropdown style="padding: 0; padding-left: 15px;padding-right: 15px;">
+            <a dropdownToggle mdbWavesEffect type="button"
+              style="display: flex; flex-direction: row; justify-content: center; align-items: center;"
+              class="nav-link dropdown-toggle" mdbWavesEffect>
+              <mdb-icon fas icon="map-marker-alt" style="color: grey;"></mdb-icon> <label
+                style="margin-left: 10px;margin-bottom: 0px;font-size: 13px;white-space: nowrap;">{{util.translate('Deliver
+                to')}}
+                {{cityName}} <span class="caret"></span> </label>
+            </a>
+            <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+              <a class="dropdown-item waves-light" mdbWavesEffect style="color: black !important;"
+                (click)="selected(item)" *ngFor="let item of cities">{{item.name}} </a>
+            </div>
+          </li>
+        </ul> -->
+
+        <div class="navbar-nav" *ngFor="let item of subcategories | slice:0:7">
+          <!-- <li class="nav-item"  style="padding: 0; padding-left: 15px;padding-right: 15px;"> -->
+            <!-- <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle" mdbWavesEffect>
+              {{item.name}} <span class="caret"></span>*ngFor="let sub of item.sub | slice:0:7"
+            </a> -->
+            <a   mdbWavesEffect type="button"   class="nav-link"  mdbWavesEffect  (click)="subItems(item.categories,item)">
+              {{item.name}}
+            </a>
+            <!-- <div  class="dropdown-menu dropdown dropdown-primary" role="menu">
+              <a class="dropdown-item waves-light" mdbWavesEffect *ngFor="let sub of item.sub"
+                (click)="subItems(item,sub)">{{sub.name}} </a>
+            </div> -->
+          <!-- </li> -->
+       </div>
+
+
 
 
 
