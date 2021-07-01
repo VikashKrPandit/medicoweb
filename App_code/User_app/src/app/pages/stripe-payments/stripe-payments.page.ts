@@ -145,7 +145,7 @@ export class StripePaymentsPage implements OnInit {
     console.log('param----->', param);
 
     this.util.show();
-    this.api.post('orders/save', param).subscribe((data: any) => {
+    this.api.post_private('orders/save', param).subscribe((data: any) => {
       console.log(data);
       this.util.hide();
       this.api.createOrderNotification(this.cart.stores);

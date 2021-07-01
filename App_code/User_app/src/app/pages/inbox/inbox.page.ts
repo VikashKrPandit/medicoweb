@@ -69,7 +69,7 @@ export class InboxPage implements OnInit {
       id: this.id + '_' + this.uid,
       oid: this.id
     };
-    this.api.post('chats/getById', param).subscribe((data: any) => {
+    this.api.post_private('chats/getById', param).subscribe((data: any) => {
       console.log(data);
       this.loaded = true;
       this.yourMessage = true;
@@ -108,7 +108,7 @@ export class InboxPage implements OnInit {
     };
     this.myContent.scrollToBottom(300);
     this.yourMessage = false;
-    this.api.post('chats/save', param).subscribe((data: any) => {
+    this.api.post_private('chats/save', param).subscribe((data: any) => {
       console.log(data);
       if (data && data.status === 200) {
         this.getChats();

@@ -104,13 +104,13 @@ export class AddCardPage implements OnInit {
 
   updateUser(param) {
     this.util.show(this.util.getString('updating...'));
-    this.api.post('users/edit_profile', param).subscribe((data: any) => {
+    this.api.post_private('users/edit_profile', param).subscribe((data: any) => {
       this.util.hide();
       console.log(data);
       const getParam = {
         id: localStorage.getItem('uid')
       };
-      this.api.post('users/getById', getParam).subscribe((data: any) => {
+      this.api.post_private('users/getById', getParam).subscribe((data: any) => {
         console.log('user info=>', data);
         if (data && data.status === 200 && data.data && data.data.length) {
           this.util.userInfo = data.data[0];

@@ -9,8 +9,8 @@
 */
 export const environment = {
   production: true,
-   baseURL: 'http://api.medioxygen.in/index.php/',
-  mediaURL: 'http://api.medioxygen.in/uploads/',
+baseURL: 'http://api.cure99.in/index.php/',
+  mediaURL: 'http://api.cure99.in/uploads/',
   onesignal: {
     appId: '017de731-2275-4fe7-8ada-913e7fc46ba1',
     googleProjectNumber: '187498975818',
@@ -20,5 +20,5 @@ export const environment = {
     symbol: '$',
     code: 'USD'
   },
-  authToken: '123456789',
+  authToken: '123456789'
 };

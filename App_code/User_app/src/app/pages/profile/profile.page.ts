@@ -46,7 +46,7 @@ export class ProfilePage implements OnInit {
       id: localStorage.getItem('uid')
     };
     this.util.show();
-    this.api.post('users/getById', param).subscribe((data: any) => {
+    this.api.post_private('users/getById', param).subscribe((data: any) => {
       this.util.hide();
       console.log('user info=>', data);
       if (data && data.status === 200 && data.data && data.data.length) {
@@ -112,7 +112,7 @@ export class ProfilePage implements OnInit {
       id: localStorage.getItem('uid')
     };
     this.util.show(this.util.getString('updating...'));
-    this.api.post('users/edit_profile', param).subscribe((data: any) => {
+    this.api.post_private('users/edit_profile', param).subscribe((data: any) => {
       this.util.hide();
       console.log(data);
       this.getProfile();

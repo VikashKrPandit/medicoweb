@@ -37,7 +37,7 @@ export class ChatsPage implements OnInit {
       id: localStorage.getItem('uid')
     };
     this.dummy = Array(10);
-    this.api.post('chats/getByGroup', param).subscribe((data: any) => {
+    this.api.post_private('chats/getByGroup', param).subscribe((data: any) => {
       console.log(data);
       if (data && data.status === 200) {
         const info = [];
@@ -51,7 +51,7 @@ export class ChatsPage implements OnInit {
         const uid = {
           id: uniq.join()
         };
-        this.api.post('stores/getChatsNames', uid).subscribe((uids: any) => {
+        this.api.post_private('stores/getChatsNames', uid).subscribe((uids: any) => {
           this.dummy = [];
           console.log(uids);
           if (uids && uids.status === 200) {

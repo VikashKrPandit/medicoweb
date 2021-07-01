@@ -241,7 +241,7 @@ export class AddAddressPage implements OnInit {
           landmark: this.landmark,
           pincode: this.pincode
         };
-        this.api.post('address/save', param).subscribe((data: any) => {
+        this.api.post_private('address/save', param).subscribe((data: any) => {
           this.util.hide();
           if (data && data.status === 200) {
             this.util.publishNewAddress();
@@ -287,7 +287,7 @@ export class AddAddressPage implements OnInit {
           pincode: this.pincode
         };
         this.util.show();
-        this.api.post('address/editList', param).subscribe((data: any) => {
+        this.api.post_private('address/editList', param).subscribe((data: any) => {
           this.util.hide();
           if (data && data.status === 200) {
             this.util.publishNewAddress();

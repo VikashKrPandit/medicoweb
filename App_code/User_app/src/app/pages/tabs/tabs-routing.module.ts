@@ -117,7 +117,6 @@ const routes: Routes = [
               import('../add-card/add-card.module').then(m => m.AddCardPageModule)
           }
         ],
-        canActivate: [AuthGuard]
       },
       {
         path: 'orders',
@@ -170,8 +169,7 @@ const routes: Routes = [
             loadChildren: () =>
               import('../help/help.module').then(m => m.HelpPageModule)
           }
-        ],
-        canActivate: [AuthGuard]
+        ]
       },
       {
         path: '',

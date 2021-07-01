@@ -91,7 +91,7 @@ export class FavoritePage implements OnInit {
       id: this.util.favIds.join()
     };
     this.dummy = Array(20);
-    this.api.post('products/getFavs', param).subscribe((data: any) => {
+    this.api.post_private('products/getFavs', param).subscribe((data: any) => {
       console.log(data);
       this.dummy = [];
       if (data && data.status === 200 && data.data && data.data.length) {

@@ -84,6 +84,34 @@ export class ApiService {
     return this.http.post('https://onesignal.com/api/v1/notifications', body, header);
   }
 
+  verifyRazorPayment(payId, key, secret) {
+    const authorizationData = 'Basic ' + btoa(key + ':' + secret);
+
+    return this.nativeHttp.get('https://api.razorpay.com/v1/payments/' + payId, {}, {
+      Authorization: authorizationData
+    });
+  }
+
+  public post_private(url, body) {
+    const header = {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .set('Authorization', `Bearer ${localStorage.getItem('token')}`)
+    };
+    const param = this.JSON_to_URLEncoded(body);
+    return this.http.post(this.baseUrl + url, param, header);
+  }
+
+
+  public get_private(url) {
+    const header = {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .set('Authorization', `Bearer ${localStorage.getItem('token')}`)
+    };
+    return this.http.get(this.baseUrl + url, header);
+  }
+
   JSON_to_URLEncoded(element, key?, list?) {
     let new_list = list || [];
     if (typeof element === 'object') {

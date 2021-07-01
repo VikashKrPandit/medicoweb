@@ -73,7 +73,7 @@ export class OrderDetailsPage implements OnInit {
     const param = {
       id: this.id
     };
-    this.api.post('orders/getById', param).subscribe((data: any) => {
+    this.api.post_private('orders/getById', param).subscribe((data: any) => {
       console.log(data);
       this.loaded = true;
       if (data && data.status === 200 && data.data.length > 0) {
@@ -140,7 +140,7 @@ export class OrderDetailsPage implements OnInit {
           const userinfo = {
             id: this.driverId
           };
-          this.api.post('drivers/getDriversData', userinfo).subscribe((data: any) => {
+          this.api.post_private('drivers/getDriversData', userinfo).subscribe((data: any) => {
             console.log('driverid>', data);
             if (data && data.status === 200 && data.data && data.data.length) {
               this.driverInfo = data.data;
@@ -283,7 +283,7 @@ export class OrderDetailsPage implements OnInit {
       status: JSON.stringify(this.status),
     };
     console.log('---->', this.status)
-    this.api.post('orders/editList', param).subscribe((data: any) => {
+    this.api.post_private('orders/editList', param).subscribe((data: any) => {
       console.log('order', data);
       this.util.hide();
       if (this.orderAt === 'home' && this.driverId !== '0') {
@@ -321,7 +321,7 @@ export class OrderDetailsPage implements OnInit {
       current: value
     };
     console.log('param', param);
-    this.api.post('drivers/edit_profile', param).subscribe((data: any) => {
+    this.api.post_private('drivers/edit_profile', param).subscribe((data: any) => {
       console.log(data);
     }, error => {
       console.log(error);

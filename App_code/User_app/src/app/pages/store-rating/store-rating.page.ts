@@ -115,7 +115,7 @@ export class StoreRatingPage implements OnInit {
     };
 
     this.util.show();
-    this.api.post('rating/save', param).subscribe((data: any) => {
+    this.api.post_private('rating/save', param).subscribe((data: any) => {
       console.log(data);
       this.util.hide();
       if (data && data.status === 200) {
@@ -125,7 +125,7 @@ export class StoreRatingPage implements OnInit {
           total_rating: this.total + 1,
           rating: storeRating
         }
-        this.api.post('stores/editByUid', storeParam).subscribe((stores: any) => {
+        this.api.post_private('stores/editByUid', storeParam).subscribe((stores: any) => {
           console.log('store edit done', stores);
         }, error => {
           console.log(error);

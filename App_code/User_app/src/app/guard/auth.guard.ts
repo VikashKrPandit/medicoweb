@@ -10,6 +10,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ApiService } from '../services/api.service';
+import { UtilService } from '../services/util.service';
 
 
 @Injectable({
@@ -18,16 +20,33 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
     constructor(
         private router: Router,
+        private api: ApiService,
+        private util: UtilService
     ) { }
-    canActivate(
-        next: ActivatedRouteSnapshot,
-        state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-        const uid = localStorage.getItem('uid');
-        console.log('uid', localStorage.getItem('uid'));
-        if (uid && uid != null && uid !== 'null') {
-            return true;
-        }
-        this.router.navigate(['/login']);
-        return false;
+    canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+        return new Promise(res => {
+            this.util.show('Verifying');
+            this.api.post_private('users/validateUserToken', {}).subscribe(
+                (data: any) => {
+                    this.util.hide();
+                    if (data && data.status === 200 && data.data && data.data.status === 200) {
+                        res(true);
+                    } else {
+                        localStorage.removeItem('uid');
+                        localStorage.removeItem('token');
+                        this.router.navigate(['/login']);
+                        res(false);
+                    }
+                },
+                (error) => {
+                    this.util.hide();
+                    localStorage.removeItem('uid');
+                    localStorage.removeItem('token');
+                    this.router.navigate(['/login']);
+                    res(false);
+                }
+            );
+
+        });
     }
 }

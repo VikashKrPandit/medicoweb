@@ -115,7 +115,7 @@ export class DriverRatingPage implements OnInit {
     };
 
     this.util.show();
-    this.api.post('rating/save', param).subscribe((data: any) => {
+    this.api.post_private('rating/save', param).subscribe((data: any) => {
       console.log(data);
       this.util.hide();
       if (data && data.status === 200) {

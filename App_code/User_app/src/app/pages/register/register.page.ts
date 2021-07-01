@@ -86,12 +86,13 @@ export class RegisterPage implements OnInit {
           this.loggedIn = false;
           console.log(data);
           if (data && data.status === 200) {
-            this.util.userInfo = data.data;
-            localStorage.setItem('uid', data.data.id);
+            this.util.userInfo = data.data.data;
+            localStorage.setItem('uid', data.data.data.id);
+            localStorage.setItem('token', data.data.token);
             const fcm = localStorage.getItem('fcm');
             if (fcm && fcm !== null && fcm !== 'null') {
               const updateParam = {
-                id: data.data.id,
+                id: data.data.data.id,
                 fcm_token: fcm
               };
               this.api.post('users/edit_profile', updateParam).subscribe((data: any) => {
@@ -189,12 +190,13 @@ export class RegisterPage implements OnInit {
         this.loggedIn = false;
         console.log(data);
         if (data && data.status === 200) {
-          this.util.userInfo = data.data;
-          localStorage.setItem('uid', data.data.id);
+          this.util.userInfo = data.data.data;
+          localStorage.setItem('uid', data.data.data.id);
+          localStorage.setItem('token', data.data.token);
           const fcm = localStorage.getItem('fcm');
           if (fcm && fcm !== null && fcm !== 'null') {
             const updateParam = {
-              id: data.data.id,
+              id: data.data.data.id,
               fcm_token: fcm
             };
             this.api.post('users/edit_profile', updateParam).subscribe((data: any) => {

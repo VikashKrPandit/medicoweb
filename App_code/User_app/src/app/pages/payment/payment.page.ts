@@ -71,7 +71,7 @@ export class PaymentPage implements OnInit {
 
   getPayments() {
     this.util.show();
-    this.api.get('payments').subscribe((data: any) => {
+    this.api.get_private('payments/getPaymentList').subscribe((data: any) => {
       console.log(data);
       this.util.hide();
       if (data && data.status === 200 && data.data) {
@@ -186,6 +186,36 @@ export class PaymentPage implements OnInit {
         const orderId = urlItems.searchParams.get('id');
         this.makeOrder('razorpay', orderId);
       }
+
+      if (navUrl.includes('callback')) {
+        console.log('close');
+        browser.close();
+        const urlItems = new URL(event.url).pathname;
+        console.log('--->>', urlItems.split('/'), urlItems.split('/').length, urlItems.split('/')[3]);
+        if (urlItems.split('/').length > 5 && urlItems.split('/')[3].startsWith('pay_')) {
+          const paymentId = urlItems.split('/')[3];
+          console.log('paymentId', paymentId);
+          this.util.show();
+          this.api.verifyRazorPayment(paymentId, this.razorKey, 'secret_key').then((razorResponses: any) => {
+            console.log('razorpayResponse', razorResponses);
+            const razorResponse = JSON.parse(razorResponses.data);
+            console.log('data', razorResponse);
+            this.util.hide();
+            if (razorResponse && razorResponse.status === 'authorized' && razorResponse.id === paymentId) {
+              this.makeOrder('razorpay', razorResponse.id);
+            }
+          }, error => {
+            console.log(error);
+            this.util.hide();
+            this.util.showToast(this.util.getString('Something went wrong'), 'danger', 'bottom');
+          }).catch((error) => {
+            console.log(error);
+            this.util.hide();
+            this.util.showToast(this.util.getString('Something went wrong'), 'danger', 'bottom');
+          });
+        }
+
+      }
     });
   }
 
@@ -254,7 +284,7 @@ export class PaymentPage implements OnInit {
     console.log('param----->', param);
 
     this.util.show();
-    this.api.post('orders/save', param).subscribe((data: any) => {
+    this.api.post_private('orders/save', param).subscribe((data: any) => {
       console.log(data);
       this.util.hide();
       this.api.createOrderNotification(this.cart.stores);
@@ -313,7 +343,7 @@ export class PaymentPage implements OnInit {
     console.log('param----->', param);
 
     this.util.show();
-    this.api.post('orders/save', param).subscribe((data: any) => {
+    this.api.post_private('orders/save', param).subscribe((data: any) => {
       console.log(data);
       this.util.hide();
       this.api.createOrderNotification(this.cart.stores);
@@ -349,6 +379,8 @@ export class PaymentPage implements OnInit {
     browser.on('loadstop').subscribe(event => {
       console.log('event?;>11', event);
       const navUrl = event.url;
+      console.log(navUrl.includes('success'), navUrl.includes('checkout/done'));
+      console.log(navUrl.includes('success') || navUrl.includes('checkout/done'));
       if (navUrl.includes('success') || navUrl.includes('checkout/done')) {
         console.log('close');
         browser.close();

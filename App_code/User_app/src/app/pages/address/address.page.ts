@@ -62,7 +62,7 @@ export class AddressPage implements OnInit {
     }
     this.myaddress = [];
     this.dummy = Array(10);
-    this.api.post('address/getByUid', param).subscribe((data: any) => {
+    this.api.post_private('address/getByUid', param).subscribe((data: any) => {
       console.log(data);
       this.dummy = [];
       if (data && data.status === 200 && data.data.length) {
@@ -130,7 +130,7 @@ export class AddressPage implements OnInit {
               const param = {
                 id: item.id
               };
-              this.api.post('address/deleteList', param).subscribe(info => {
+              this.api.post_private('address/deleteList', param).subscribe(info => {
                 console.log(info);
                 this.util.hide();
                 this.getAddress();

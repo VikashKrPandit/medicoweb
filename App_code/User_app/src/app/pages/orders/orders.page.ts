@@ -37,7 +37,7 @@ export class OrdersPage implements OnInit {
     const param = {
       id: localStorage.getItem('uid')
     }
-    this.api.post('orders/getByUid', param).subscribe((data: any) => {
+    this.api.post_private('orders/getByUid', param).subscribe((data: any) => {
       console.log(data);
       this.dummy = [];
       if (data && data.status === 200 && data.data.length > 0) {

@@ -305,7 +305,7 @@ export class ProductPage implements OnInit {
       };
       this.util.haveFav = true;
       console.log('parama', param)
-      this.api.post('favourite/editList', param).subscribe((data: any) => {
+      this.api.post_private('favourite/editList', param).subscribe((data: any) => {
         console.log('save response', data);
         if (data && data.status !== 200) {
           this.util.errorToast(this.util.getString('Something went wrong'));
@@ -326,7 +326,7 @@ export class ProductPage implements OnInit {
         };
         this.util.haveFav = true;
         console.log('parama', param)
-        this.api.post('favourite/editList', param).subscribe((data: any) => {
+        this.api.post_private('favourite/editList', param).subscribe((data: any) => {
           console.log('save response', data);
           if (data && data.status !== 200) {
             this.util.errorToast(this.util.getString('Something went wrong'));
@@ -343,7 +343,7 @@ export class ProductPage implements OnInit {
         };
         this.util.haveFav = true;
         console.log('parama', param)
-        this.api.post('favourite/save', param).subscribe((data: any) => {
+        this.api.post_private('favourite/save', param).subscribe((data: any) => {
           console.log('save response', data);
           if (data && data.status !== 200) {
             this.util.errorToast(this.util.getString('Something went wrong'));

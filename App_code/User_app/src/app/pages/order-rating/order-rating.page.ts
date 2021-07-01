@@ -62,7 +62,7 @@ export class OrderRatingPage implements OnInit {
     const param = {
       id: this.id
     };
-    this.api.post('orders/getById', param).subscribe((data: any) => {
+    this.api.post_private('orders/getById', param).subscribe((data: any) => {
       console.log(data);
       this.loaded = true;
       if (data && data.status === 200 && data.data.length > 0) {
@@ -102,7 +102,7 @@ export class OrderRatingPage implements OnInit {
           const userinfo = {
             id: this.driverId
           };
-          this.api.post('drivers/getDriversData', userinfo).subscribe((data: any) => {
+          this.api.post_private('drivers/getDriversData', userinfo).subscribe((data: any) => {
             console.log('driverid>', data);
             if (data && data.status === 200 && data.data && data.data.length) {
               this.driverInfo = data.data;

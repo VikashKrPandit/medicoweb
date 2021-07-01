@@ -53,7 +53,6 @@ export class AppComponent {
     this.initializeApp();
     this.menuCtrl.enable(false, 'menu1');
     console.log(moment().format('lll'));
-
   }
 
   initializeApp() {
@@ -191,7 +190,7 @@ export class AppComponent {
                 id: uid,
                 fcm_token: data.userId
               };
-              this.api.post('users/edit_profile', param).subscribe((data: any) => {
+              this.api.post_private('users/edit_profile', param).subscribe((data: any) => {
                 console.log('user info=>', data);
               }, error => {
                 console.log(error);
@@ -207,7 +206,7 @@ export class AppComponent {
         const param = {
           id: uid
         };
-        this.api.post('users/getById', param).subscribe((data: any) => {
+        this.api.post_private('users/getById', param).subscribe((data: any) => {
           console.log('user info=>', data);
           if (data && data.status === 200 && data.data && data.data.length) {
             this.util.userInfo = data.data[0];
@@ -218,7 +217,7 @@ export class AppComponent {
           console.log(error);
         });
 
-        this.api.post('favourite/getByUid', param).subscribe((data: any) => {
+        this.api.post_private('favourite/getByUid', param).subscribe((data: any) => {
           console.log('fav data', data);
           if (data && data.status === 200 && data.data.length > 0) {
             this.util.haveFav = true;

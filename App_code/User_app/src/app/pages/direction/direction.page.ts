@@ -69,7 +69,7 @@ export class DirectionPage implements OnInit {
           const param = {
             id: this.uid
           };
-          this.api.post('drivers/getById', param).subscribe((infoss: any) => {
+          this.api.post_private('drivers/getById', param).subscribe((infoss: any) => {
             console.log('******************* driver --->>>> driverinfo --->', infoss);
             if (infoss && infoss.status === 200 && infoss.data && infoss.data.length) {
               this.driverInfo = infoss.data[0];
@@ -87,7 +87,7 @@ export class DirectionPage implements OnInit {
           const param = {
             id: this.uid
           };
-          this.api.post('stores/getByUid', param).subscribe((data: any) => {
+          this.api.post_private('stores/getByUid', param).subscribe((data: any) => {
             console.log('*******************', data);
             if (data && data.status === 200 && data.data && data.data.length) {
               this.storeLat = parseFloat(data.data[0].lat);
@@ -218,7 +218,7 @@ export class DirectionPage implements OnInit {
     const param = {
       id: this.uid
     };
-    this.api.post('drivers/getById', param).subscribe((data: any) => {
+    this.api.post_private('drivers/getById', param).subscribe((data: any) => {
       console.log('******************* driver --->>>> driverinfo --->', data);
       if (data && data.status === 200 && data.data && data.data.length) {
         this.driverLat = parseFloat(data.data[0].lat);

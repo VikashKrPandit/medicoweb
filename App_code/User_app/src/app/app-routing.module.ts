@@ -50,7 +50,7 @@ const routes: Routes = [
   {
     path: 'cart',
     loadChildren: () => import('./pages/cart/cart.module').then(m => m.CartPageModule),
-    canActivate: [AuthGuard]
+    
   },
   {
     path: 'account',

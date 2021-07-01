@@ -63,21 +63,24 @@ export class LoginPage implements OnInit {
       email: this.email,
       password: this.password
     };
-    this.api.post('users/login', param).subscribe((data: any) => {
+    this.api.post('users/loginUser', param).subscribe((data: any) => {
       this.loggedIn = false;
       console.log(data);
       if (data && data.status === 200) {
-        if (data && data.data && data.data.type === 'user') {
-          if (data.data.status === '1') {
-            localStorage.setItem('uid', data.data.id);
-            this.util.userInfo = data.data;
+
+        if (data && data.data && data.data.data.type === 'user') {
+          if (data.data.data.status === '1') {
+            console.log('tokne', data.data.token);
+            localStorage.setItem('uid', data.data.data.id);
+            localStorage.setItem('token', data.data.token);
+            this.util.userInfo = data.data.data;
             const fcm = localStorage.getItem('fcm');
             if (fcm && fcm !== null && fcm !== 'null') {
               const updateParam = {
-                id: data.data.id,
+                id: data.data.data.id,
                 fcm_token: fcm
               };
-              this.api.post('users/edit_profile', updateParam).subscribe((data: any) => {
+              this.api.post_private('users/edit_profile', updateParam).subscribe((data: any) => {
                 console.log('user info=>', data);
               }, error => {
                 console.log(error);
@@ -85,9 +88,9 @@ export class LoginPage implements OnInit {
             }
 
             const favParam = {
-              id: data.data.id
+              id: data.data.data.id
             }
-            this.api.post('favourite/getByUid', favParam).subscribe((data: any) => {
+            this.api.post_private('favourite/getByUid', favParam).subscribe((data: any) => {
               console.log('fav data', data);
               if (data && data.status === 200 && data.data.length > 0) {
                 this.util.haveFav = true;
@@ -124,7 +127,7 @@ export class LoginPage implements OnInit {
                   queryParams: {
                     id: 0,
                     name: 'Support',
-                    uid: data.data.id
+                    uid: data.data.data.id
                   }
                 };
                 this.router.navigate(['inbox'], inboxParam);
@@ -191,21 +194,22 @@ export class LoginPage implements OnInit {
       password: this.mobilePassword
     };
     this.loggedIn = true;
-    this.api.post('users/loginWithPhoneAndPassword', param).subscribe((data: any) => {
+    this.api.post('users/loginWithPhoneAndPasswordUser', param).subscribe((data: any) => {
       this.loggedIn = false;
       console.log(data);
       if (data && data.status === 200) {
-        if (data && data.data && data.data.type === 'user') {
-          if (data.data.status === '1') {
-            localStorage.setItem('uid', data.data.id);
-            this.util.userInfo = data.data;
+        if (data && data.data && data.data.data.type === 'user') {
+          if (data.data.data.status === '1') {
+            localStorage.setItem('uid', data.data.data.id);
+            localStorage.setItem('token', data.data.token);
+            this.util.userInfo = data.data.data;
             const fcm = localStorage.getItem('fcm');
             if (fcm && fcm !== null && fcm !== 'null') {
               const updateParam = {
-                id: data.data.id,
+                id: data.data.data.id,
                 fcm_token: fcm
               };
-              this.api.post('users/edit_profile', updateParam).subscribe((data: any) => {
+              this.api.post_private('users/edit_profile', updateParam).subscribe((data: any) => {
                 console.log('user info=>', data);
               }, error => {
                 console.log(error);
@@ -213,9 +217,9 @@ export class LoginPage implements OnInit {
             }
 
             const favParam = {
-              id: data.data.id
+              id: data.data.data.id
             }
-            this.api.post('favourite/getByUid', favParam).subscribe((data: any) => {
+            this.api.post_private('favourite/getByUid', favParam).subscribe((data: any) => {
               console.log('fav data', data);
               if (data && data.status === 200 && data.data.length > 0) {
                 this.util.haveFav = true;
@@ -252,7 +256,7 @@ export class LoginPage implements OnInit {
                   queryParams: {
                     id: 0,
                     name: 'Support',
-                    uid: data.data.id
+                    uid: data.data.data.id
                   }
                 };
                 this.router.navigate(['inbox'], inboxParam);
@@ -313,25 +317,26 @@ export class LoginPage implements OnInit {
     });
 
     modal.onDidDismiss().then((data) => {
-      console.log(data);
+      console.log(data, '');
       if (data && data.role === 'ok') {
         const param = {
           id: uid
         };
-        this.api.post('users/getById', param).subscribe((data: any) => {
+        this.api.post('users/getByIDAfterVerify', param).subscribe((data: any) => {
           console.log('user data', data);
-          if (data && data.status === 200 && data.data && data.data.length && data.data[0].type === 'user') {
-            this.util.userInfo = data.data[0];
-            if (data && data.data && data.data[0].type === 'user') {
-              if (data.data[0].status === '1') {
+          if (data && data.status === 200 && data.data && data.data.data.length && data.data.data[0].type === 'user') {
+            this.util.userInfo = data.data.data[0];
+            if (data && data.data && data.data.data[0].type === 'user') {
+              if (data.data.data[0].status === '1') {
                 localStorage.setItem('uid', uid);
+                localStorage.setItem('token', data.data.token);
                 const fcm = localStorage.getItem('fcm');
                 if (fcm && fcm !== null && fcm !== 'null') {
                   const updateParam = {
                     id: uid,
                     fcm_token: fcm
                   };
-                  this.api.post('users/edit_profile', updateParam).subscribe((data: any) => {
+                  this.api.post_private('users/edit_profile', updateParam).subscribe((data: any) => {
                     console.log('user info=>', data);
                   }, error => {
                     console.log(error);
@@ -341,7 +346,7 @@ export class LoginPage implements OnInit {
                 const favParam = {
                   id: uid
                 }
-                this.api.post('favourite/getByUid', favParam).subscribe((data: any) => {
+                this.api.post_private('favourite/getByUid', favParam).subscribe((data: any) => {
                   console.log('fav data', data);
                   if (data && data.status === 200 && data.data.length > 0) {
                     this.util.haveFav = true;
