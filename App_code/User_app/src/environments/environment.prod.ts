@@ -9,7 +9,7 @@
 */
 export const environment = {
   production: true,
-baseURL: 'http://api.cure99.in/index.php/',
+  baseURL: 'http://api.cure99.in/index.php/',
   mediaURL: 'http://api.cure99.in/uploads/',
   onesignal: {
     appId: '017de731-2275-4fe7-8ada-913e7fc46ba1',

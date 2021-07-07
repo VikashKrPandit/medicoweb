@@ -515,7 +515,7 @@
       <div class="cart_box">
         <div class="header_flex"><label class="head_lbl">Prescription</label></div>
         <div class="round_image"
-          [ngStyle]="{'background-image':'url('+ getProfile()+'),url(assets/icon.png)'}">
+          [ngStyle]="{'background-image':'url('+ getPrescription()+'),url(assets/icon.png)'}">
           <label class="green_box" for="file-input">
             <mdb-icon fas icon="pencil-alt" class="pencil_icn"></mdb-icon>
             <input id="file-input" (change)="prescriptionUpload($event.target.files)" type="file" />
@@ -634,7 +634,7 @@
       </div>
       <div class="btn_div">
         <button type="button" class="btn" (click)="prev()">{{util.translate('Back')}}</button>
-        <button type="button" class="btn" (click)="next()">{{util.translate('Make Payment')}}</button>
+        <button type="button" class="btn" *ngIf="util.pscimage" (click)="next()">{{util.translate('Make Payment')}}</button>
       </div>
 
     </div>

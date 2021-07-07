@@ -156,10 +156,8 @@ export class CartComponent implements OnInit {
     }
   }
 
-  getProfile() {
-    // return this.util.userInfo && this.util.userInfo.cover ? this.api.mediaURL + this.util.userInfo.cover : '';
-    // console.log('this.util==========>', this.util)
-    return this.util.pscimage
+  getPrescription() {
+    return this.util.pscimage ? this.api.mediaURL + this.util.pscimage : ''
   }
   // End prescription
 
@@ -1136,10 +1134,8 @@ export class CartComponent implements OnInit {
       this.tabID = 3;
     } else if (!this.selectedAddress) {
       this.util.errorMessage(this.util.translate('Please select address'));
-    } else if (!this.util.pscimage) {
-      this.util.errorMessage(this.util.translate('Please upload prescription'));
     }
-    console.log('this.util.pscimage--------------', this.util)
+    
     this.smoothScrollTop();
     this.cart.calcuate();
   }
