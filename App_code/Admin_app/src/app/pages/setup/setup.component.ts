@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { ApisService } from 'src/app/services/apis.service';
@@ -39,6 +39,14 @@ export class SetupComponent implements OnInit {
     private title: Title,
     public util: UtilService
   ) {
+    this.api.get('users/get_admin').then((user: any) => {
+      console.log('user', user);
+      if (user && user.status === 200 && user.data.success === true) {
+        this.router.navigate(['/login']);
+      }
+    }).catch(error => {
+      console.log(error);
+    });
     this.getIP().then(data => {
       console.log(data);
       this.ip = data;
@@ -85,12 +93,11 @@ export class SetupComponent implements OnInit {
       country_code: '+' + this.mobileCcode
     };
     this.spinner.show();
-    this.api.post('users/registerUser', param).then((data: any) => {
+    this.api.post('users/registerAdmin', param).then((data: any) => {
       console.log('datas', data);
       this.spinner.hide();
       if (data && data.status === 200) {
-        localStorage.setItem('uid', 'admin');
-        localStorage.setItem('type', 'admin');
+        localStorage.setItem('token', data.data.token);
         this.postLicense();
         this.router.navigate(['']);
       } else if (data && data.status === 500) {

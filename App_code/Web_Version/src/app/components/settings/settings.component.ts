@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { ActivatedRoute, Router, NavigationExtras, NavigationEnd, Event } from '@angular/router';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
@@ -135,7 +135,7 @@ export class SettingsComponent implements OnInit {
     const param = {
       id: localStorage.getItem('uid')
     };
-    this.api.post('orders/getByUid', param).then((data: any) => {
+    this.api.post_private('orders/getByUid', param).then((data: any) => {
       this.dummy = [];
       console.log(data);
       if (data && data.status === 200 && data.data.length) {
@@ -185,7 +185,7 @@ export class SettingsComponent implements OnInit {
     const param = {
       id: localStorage.getItem('uid')
     };
-    this.api.post('address/getByUid', param).then((data) => {
+    this.api.post_private('address/getByUid', param).then((data) => {
       console.log(data);
       this.dummyAddress = [];
       if (data && data.status === 200 && data.data.length > 0) {
@@ -317,7 +317,7 @@ export class SettingsComponent implements OnInit {
         const param = {
           id: item.id
         };
-        this.api.post('address/deleteList', param).then(info => {
+        this.api.post_private('address/deleteList', param).then(info => {
           console.log(info);
           this.util.stop();
           this.getAddress();
@@ -367,7 +367,7 @@ export class SettingsComponent implements OnInit {
           pincode: this.pincode
         };
 
-        this.api.post('address/save', param).then((data: any) => {
+        this.api.post_private('address/save', param).then((data: any) => {
           this.util.stop();
           if (data && data.status === 200) {
             // this.navCtrl.back();
@@ -487,7 +487,7 @@ export class SettingsComponent implements OnInit {
           pincode: this.pincode
         };
 
-        this.api.post('address/editList', param).then((data: any) => {
+        this.api.post_private('address/editList', param).then((data: any) => {
           this.util.stop();
           this.chmod.detectChanges();
           if (data && data.status === 200) {
@@ -537,7 +537,7 @@ export class SettingsComponent implements OnInit {
       id: localStorage.getItem('uid')
     };
     this.util.start();
-    this.api.post('users/edit_profile', param).then((data: any) => {
+    this.api.post_private('users/edit_profile', param).then((data: any) => {
       this.util.stop();
       console.log(data);
       this.getProfileInfo();
@@ -553,7 +553,7 @@ export class SettingsComponent implements OnInit {
       id: localStorage.getItem('uid')
     };
     this.util.start();
-    this.api.post('users/getById', param).then((data: any) => {
+    this.api.post_private('users/getById', param).then((data: any) => {
       this.util.stop();
       console.log('user info=>', data);
       if (data && data.status === 200 && data.data && data.data.length) {
@@ -590,7 +590,7 @@ export class SettingsComponent implements OnInit {
             id: localStorage.getItem('uid')
           };
           this.util.start();
-          this.api.post('users/edit_profile', param).then((update: any) => {
+          this.api.post_private('users/edit_profile', param).then((update: any) => {
             this.util.stop();
             console.log(update);
             this.getProfileInfo();

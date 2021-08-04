@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -20,7 +20,8 @@ export class UtilService {
   loader: any;
   isLoading = false;
   details: any;
-  private address = new Subject<any>();
+  public address = new Subject<any>();
+ /* private address = new Subject<any>();*/
   private coupon = new Subject<any>();
   private review = new Subject<any>();
   orders: any;
@@ -43,10 +44,10 @@ export class UtilService {
   public popupRX = new Subject<any>();
   public city: any;
   public stripe: any;
+  public pscimage: any;
   public stripeCode: any;
 
   public paypal: any;
-  public pscimage: any;
   public paypalCode: any;
 
   public razor: any;
@@ -1292,6 +1293,9 @@ export class UtilService {
   }
 
   translate(str) {
+    if (this.translations[str]) {
+      return this.translations[str];
+    }
     return str;
   }
 

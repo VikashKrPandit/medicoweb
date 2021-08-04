@@ -10,14 +10,29 @@ export class AuthGuard implements CanActivate {
 
     constructor(private authServ: ApisService, private router: Router) { }
 
-    canActivate(route: ActivatedRouteSnapshot): any {
-        ///// Less Secure but faster
-        const uid = localStorage.getItem('uid');
-        console.log('uid', localStorage.getItem('uid'));
-        if (uid && uid != null && uid !== 'null') {
-            return true;
-        }
-        this.router.navigate(['/login']);
-        return false;
+    canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+        return new Promise(res => {
+
+
+            this.authServ.post_private('users/validateAdminToken', {}).then(
+                (data) => {
+                    if (data && data.status === 200 && data.data && data.data.status === 200) {
+                        res(true);
+                    } else {
+                        localStorage.removeItem('uid');
+                        localStorage.removeItem('token');
+                        this.router.navigate(['/login']);
+                        res(false);
+                    }
+                },
+                (error) => {
+                    localStorage.removeItem('uid');
+                    localStorage.removeItem('token');
+                    this.router.navigate(['/login']);
+                    res(false);
+                }
+            );
+
+        });
     }
 }

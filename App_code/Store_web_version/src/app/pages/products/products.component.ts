@@ -1,11 +1,11 @@
 /*
- Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { ApisService } from 'src/app/services/apis.service';
@@ -178,7 +178,7 @@ export class ProductsComponent implements OnInit {
             in_home: item.in_home === '1' ? 0 : 1
           };
           this.spinner.show();
-          this.api.post('products/editList', param).then((datas) => {
+          this.api.post_private('products/editList', param).then((datas) => {
             this.spinner.hide();
             this.getProducts();
           }, error => {
@@ -214,7 +214,7 @@ export class ProductsComponent implements OnInit {
             status: item.status === '1' ? 0 : 1
           };
           this.spinner.show();
-          this.api.post('products/editList', param).then((datas) => {
+          this.api.post_private('products/editList', param).then((datas) => {
             this.spinner.hide();
             this.getProducts();
           }, error => {

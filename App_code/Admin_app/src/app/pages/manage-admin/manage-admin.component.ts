@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,23 +51,7 @@ export class ManageAdminComponent implements OnInit {
     private router: Router,
     public util: UtilService
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     this.route.queryParams.subscribe((data: any) => {
       this.new = data.register === 'true' ? true : false;
       if (!this.new && data.id) {
@@ -83,7 +67,7 @@ export class ManageAdminComponent implements OnInit {
       id: this.id
     };
     this.spinner.show();
-    this.api.post('users/getById', param).then((data: any) => {
+    this.api.post_private('users/getById', param).then((data: any) => {
       console.log(data);
       this.spinner.hide();
       if (data && data.status === 200 && data.data.length) {
@@ -194,7 +178,7 @@ export class ManageAdminComponent implements OnInit {
     };
 
     this.spinner.show();
-    this.api.post('users/registerUser', param).then((data: any) => {
+    this.api.post('users/registerAdmin', param).then((data: any) => {
       console.log(data);
       this.spinner.hide();
       if (data && data.data && data.status === 200) {
@@ -243,7 +227,7 @@ export class ManageAdminComponent implements OnInit {
       id: this.id
     };
 
-    this.api.post('users/edit_profile', param).then((data: any) => {
+    this.api.post_private('users/edit_admin_profile', param).then((data: any) => {
       console.log(data);
       this.spinner.hide();
       if (data && data.data && data.status === 200) {

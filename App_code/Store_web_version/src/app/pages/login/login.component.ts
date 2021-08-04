@@ -1,12 +1,12 @@
 import { Router } from '@angular/router';
 /*
- Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastData, ToastOptions, ToastyService } from 'ng2-toasty';
@@ -75,14 +75,15 @@ export class LoginComponent implements OnInit {
       password: this.password
     };
     this.spinner.show();
-    this.api.post('users/login', param).then((data: any) => {
+    this.api.post('users/loginStore', param).then((data: any) => {
       console.log('datas', data);
 
       if (data && data.status === 200) {
-        if (data && data.data && data.data.type && data.data.type === 'store') {
-          localStorage.setItem('uid', data.data.id);
+        if (data && data.data && data.data.data.type === 'store') {
+          localStorage.setItem('uid', data.data.data.id);
+          localStorage.setItem('token', data.data.token);
           const store = {
-            id: data.data.id
+            id: data.data.data.id
           };
           this.api.post('stores/getByUid', store).then((data: any) => {
             this.spinner.hide();
@@ -183,29 +184,17 @@ export class LoginComponent implements OnInit {
       password: this.mobilePassword
     };
     this.spinner.show();
-    this.api.post('users/loginWithPhoneAndPassword', param).then((data: any) => {
+    this.api.post('users/loginWithPhoneAndPasswordStore', param).then((data: any) => {
       this.spinner.hide();
       console.log(data);
       if (data && data.status === 200) {
-        if (data && data.data && data.data.type === 'store') {
-          if (data.data.status === '1') {
-            localStorage.setItem('uid', data.data.id);
-
-            const fcm = localStorage.getItem('fcm');
-            if (fcm && fcm !== null && fcm !== 'null') {
-              const updateParam = {
-                id: data.data.id,
-                fcm_token: fcm
-              };
-              this.api.post('users/edit_profile', updateParam).then((data: any) => {
-                console.log('user info=>', data);
-              }, error => {
-                console.log(error);
-              });
-            }
+        if (data && data.data && data.data.data.type === 'store') {
+          if (data.data.data.status === '1') {
+            localStorage.setItem('uid', data.data.data.id);
+            localStorage.setItem('token', data.data.token);
 
             const store = {
-              id: data.data.id
+              id: data.data.data.id
             };
             this.api.post('stores/getByUid', store).then((data: any) => {
               this.spinner.hide();
@@ -351,13 +340,14 @@ export class LoginComponent implements OnInit {
       id: this.uid
     };
     this.spinner.show();
-    this.api.post('users/getById', param).then((data: any) => {
+    this.api.post('users/getByIDAfterVerifyStore', param).then((data: any) => {
       console.log('user data', data);
-      if (data && data.status === 200 && data.data && data.data.length && data.data[0].type === 'store') {
+      if (data && data.status === 200 && data.data && data.data.data.length && data.data.data[0].type === 'store') {
 
-        if (data && data.data && data.data[0].type === 'store') {
-          if (data.data[0].status === '1') {
+        if (data && data.data && data.data.data[0].type === 'store') {
+          if (data.data.data[0].status === '1') {
             localStorage.setItem('uid', this.uid);
+            localStorage.setItem('token', data.data.token);
             const store = {
               id: this.uid
             };

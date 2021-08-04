@@ -1,16 +1,17 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { UsersComponent } from './layouts/users/users.component';
 import { ErrorsComponent } from './layouts/errors/errors.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -25,12 +26,14 @@ const routes: Routes = [
       {
         path: 'order',
         loadChildren: () => import('./components/order/order.module').then(m => m.OrderModule),
-        data: { title: 'Orders' }
+        data: { title: 'Orders' },
+        canActivate: [AuthGuard]
       },
       {
         path: 'order-detail',
         loadChildren: () => import('./components/order-detail/order-detail.module').then(m => m.OrderDetailModule),
-        data: { title: 'Order Details' }
+        data: { title: 'Order Details' },
+        canActivate: [AuthGuard]
       },
       {
         path: 'home',
@@ -95,7 +98,8 @@ const routes: Routes = [
       {
         path: 'user/:id/:from',
         loadChildren: () => import('./components/settings/settings.module').then(m => m.SettingsModule),
-        data: { title: 'User Informations' }
+        data: { title: 'User Informations' },
+        canActivate: [AuthGuard]
       },
       {
         path: 'privacy-policy',
@@ -120,7 +124,8 @@ const routes: Routes = [
       {
         path: 'chats',
         loadChildren: () => import('./components/chats/chats.module').then(m => m.ChatsModule),
-        data: { title: 'Chats' }
+        data: { title: 'Chats' },
+        canActivate: [AuthGuard]
       },
       {
         path: 'faq',

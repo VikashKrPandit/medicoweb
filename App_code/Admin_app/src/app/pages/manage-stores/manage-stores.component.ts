@@ -61,23 +61,7 @@ export class ManageStoresComponent implements OnInit {
     private router: Router,
     public util: UtilService
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     this.getCity();
   }
 
@@ -96,13 +80,11 @@ export class ManageStoresComponent implements OnInit {
   }
 
   getOrders() {
-
-
     const param = {
       id: this.id
     };
 
-    this.api.post('orders/getByStore', param).then((data: any) => {
+    this.api.post_private('orders/getByStoreForAdmin', param).then((data: any) => {
       console.log('by store id', data);
       let total = 0;
       if (data && data.status === 200 && data.data.length > 0) {
@@ -286,7 +268,7 @@ export class ManageStoresComponent implements OnInit {
     };
     console.log('param', param);
     this.spinner.show();
-    this.api.post('stores/editList', param).then((datas: any) => {
+    this.api.post_private('stores/editListFromAdmin', param).then((datas: any) => {
       console.log(datas);
       this.spinner.hide();
       if (datas && datas.status === 200) {
@@ -370,7 +352,7 @@ export class ManageStoresComponent implements OnInit {
       console.log('datatatrat=a=ta=t=at=', data);
       if (data && data.data && data.status === 200) {
         const storeParam = {
-          uid: data.data.id,
+          uid: data.data.data.id,
           name: this.name,
           mobile: this.phone,
           lat: this.latitude,
@@ -392,7 +374,7 @@ export class ManageStoresComponent implements OnInit {
           commission: this.commission
         };
         console.log('****', storeParam);
-        this.api.post('stores/save', storeParam).then((salons: any) => {
+        this.api.post_private('stores/save', storeParam).then((salons: any) => {
           console.log('salonaasssss--', salons);
           this.spinner.hide();
           this.navCtrl.back();

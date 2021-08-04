@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit, ViewChild, ElementRef, ViewChildren, QueryList, OnDestroy } from '@angular/core';
 import { ApisService } from 'src/app/services/apis.service';
@@ -45,29 +45,13 @@ export class ContactsComponent implements ComponentCanDeactivate {
     private util: UtilService,
     private router: Router
   ) {
-    const param2 = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param2).then((data) => {
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     const param = {
       id: 0
     };
     this.dummy = Array(10);
     this.users = [];
-    this.api.post('chats/getByGroup', param).then((data: any) => {
+    this.api.post_private('chats/getByGroup', param).then((data: any) => {
       console.log(data);
       if (data && data.status === 200) {
         const info = [];
@@ -90,7 +74,7 @@ export class ContactsComponent implements ComponentCanDeactivate {
         const uid = {
           id: uniq.join()
         };
-        this.api.post('stores/getChatsNames', uid).then((uids: any) => {
+        this.api.post_private('stores/getChatsNames', uid).then((uids: any) => {
           this.dummy = [];
           console.log(uids);
           if (uids && uids.status === 200) {
@@ -117,7 +101,7 @@ export class ContactsComponent implements ComponentCanDeactivate {
         const uid2 = {
           id: uniq2.join()
         };
-        this.api.post('users/getChatsNames', uid2).then((uids: any) => {
+        this.api.post_private('users/getChatsNames', uid2).then((uids: any) => {
           this.dummy = [];
           console.log(uids);
           if (uids && uids.status === 200) {
@@ -146,7 +130,7 @@ export class ContactsComponent implements ComponentCanDeactivate {
         const uid3 = {
           id: uniq3.join()
         };
-        this.api.post('drivers/getChatsNames', uid3).then((uids: any) => {
+        this.api.post_private('drivers/getChatsNames', uid3).then((uids: any) => {
           this.dummy = [];
           console.log(uids);
           if (uids && uids.status === 200) {
@@ -194,7 +178,7 @@ export class ContactsComponent implements ComponentCanDeactivate {
       id: 0 + '_' + this.id,
       oid: this.id
     };
-    this.api.post('chats/getById', param).then((data: any) => {
+    this.api.post_private('chats/getById', param).then((data: any) => {
       console.log(data);
 
       if (data && data.status === 200) {
@@ -213,7 +197,7 @@ export class ContactsComponent implements ComponentCanDeactivate {
       id: this.id + '_' + 0,
       oid: this.id
     };
-    this.api.post('chats/getById', param).then((data: any) => {
+    this.api.post_private('chats/getById', param).then((data: any) => {
       console.log(data);
 
       if (data && data.status === 200) {
@@ -233,7 +217,7 @@ export class ContactsComponent implements ComponentCanDeactivate {
       id: this.id + '_' + 0,
       oid: this.id
     };
-    this.api.post('chats/getById', param).then((data: any) => {
+    this.api.post_private('chats/getById', param).then((data: any) => {
       console.log(data);
 
       if (data && data.status === 200) {
@@ -280,7 +264,7 @@ export class ContactsComponent implements ComponentCanDeactivate {
         timestamp: moment().format('YYYY-MM-DD HH:mm:ss')
       };
       this.scrollToBottom();
-      this.api.post('chats/save', param).then((data: any) => {
+      this.api.post_private('chats/save', param).then((data: any) => {
         console.log(data);
         if (data && data.status === 200) {
           if (this.type === 'users') {

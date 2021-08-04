@@ -1,12 +1,12 @@
 import { ActivatedRoute, Router } from '@angular/router';
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { ToastData, ToastOptions, ToastyService } from 'ng2-toasty';
@@ -40,23 +40,7 @@ export class ManageLanguagesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     this.route.queryParams.subscribe((data) => {
       console.log(data);
       if (data && data.id) {
@@ -224,7 +208,7 @@ export class ManageLanguagesComponent implements OnInit {
     };
     console.log('ok', param);
     this.spinner.show();
-    this.api.post('lang/save', param).then(data => {
+    this.api.post_private('lang/save', param).then(data => {
       this.spinner.hide();
       console.log(data);
       this.api.alerts(this.api.translate('Success'), this.api.translate('Category added'), 'success');
@@ -264,7 +248,7 @@ export class ManageLanguagesComponent implements OnInit {
     };
     console.log('ok', param);
     this.spinner.show();
-    this.api.post('lang/editList', param).then(data => {
+    this.api.post_private('lang/editList', param).then(data => {
       this.spinner.hide();
       console.log(data);
       this.api.alerts(this.api.translate('Success'), this.api.translate('Category added'), 'success');

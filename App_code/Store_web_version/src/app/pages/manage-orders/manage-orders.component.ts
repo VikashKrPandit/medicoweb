@@ -1,11 +1,11 @@
 /*
- Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApisService } from 'src/app/services/apis.service';
@@ -99,7 +99,7 @@ export class ManageOrdersComponent implements OnInit {
         id: this.util.storeInfo.cid
       };
 
-      this.api.post('drivers/geyByCity', param).then((data: any) => {
+      this.api.post_private('drivers/geyByCity', param).then((data: any) => {
         console.log('driver data--------------->>', data);
         if (data && data.status === 200 && data.data.length) {
           const info = data.data.filter(x => x.status === '1');
@@ -135,7 +135,7 @@ export class ManageOrdersComponent implements OnInit {
       id: this.id
     };
     this.spinner.show();
-    this.api.post('orders/getById', param).then((data: any) => {
+    this.api.post_private('orders/getById', param).then((data: any) => {
       console.log(data);
       this.spinner.hide();
       this.loaded = true;
@@ -205,7 +205,7 @@ export class ManageOrdersComponent implements OnInit {
           const userinfo = {
             id: info.uid
           };
-          this.api.post('users/getById', userinfo).then((data: any) => {
+          this.api.post_private('users/getById', userinfo).then((data: any) => {
             console.log('user info=>', data);
             if (data && data.status === 200 && data.data && data.data.length) {
               this.userInfo = data.data[0];
@@ -304,23 +304,7 @@ export class ManageOrdersComponent implements OnInit {
   }
 
   printOrder() {
-    // console.log('print order');
-    // const options: PrintOptions = {
-    //   name: 'Groceryee App Summary',
-    //   duplex: false,
-    // };
-    // const order = this.orderString.join('');
-    // const content = '<div style="padding: 20px;display: flex;flex-direction: column;"> <h2 style="text-align: center;">Groceryee Order Summary</h2> <p style="float: left;margin:0px;"><b>' + this.util.store.name + '</b></p> <p style="float: left;margin:0px;"><b> ' + this.userInfo.first_name + ' ' + this.userInfo.last_name + ' </b></p> <p style="float: left;margin:0px;">' + this.datetime + ' </p> </div>' + order
-    //   + '<p style="border-bottom: 1px solid black;margin:10px 0px;"> <span style="float: left;font-weight: bold;">SubTotal</span> <span style="float: right;font-weight: bold;">' + this.grandTotal +
-    //   '$</span> </p> <br> <p style="border-bottom: 1px solid black;margin:10px 0px;"> <span style="float: left;font-weight: bold;">Delivery Charge</span> <span style="float: right;font-weight: bold;">' + this.grandTotal +
-    //   '$</span> </p> <br> <p style="border-bottom: 1px solid black;margin:10px 0px;"> <span style="float: left;font-weight: bold;">Service Tax</span> <span style="float: right;font-weight: bold;">' + this.tax +
-    //   '$</span> </p> <br> <p style="border-bottom: 1px solid black;margin:10px 0px;"> <span style="float: left;font-weight: bold;">Total</span> <span style="float: right;font-weight: bold;">' + this.grandTotal + '$</span> </p>';
-    // console.log(content);
-    // this.printer.print(content, options).then((data) => {
-    //   console.log(data);
-    // }).catch(error => {
-    //   console.log(error);
-    // });
+
   }
 
   async presentModal() {
@@ -370,7 +354,7 @@ export class ManageOrdersComponent implements OnInit {
           assignee: JSON.stringify(this.assignee)
         };
         console.log('===================================', param);
-        this.api.post('orders/editList', param).then((data: any) => {
+        this.api.post_private('orders/editList', param).then((data: any) => {
           console.log('order', data);
           this.spinner.hide();
           this.updateDriver(this.drivers[0].id, 'busy');
@@ -395,7 +379,7 @@ export class ManageOrdersComponent implements OnInit {
       current: value
     };
     console.log('param', param);
-    this.api.post('drivers/edit_profile', param).then((data: any) => {
+    this.api.post_private('drivers/edit_profile', param).then((data: any) => {
       console.log(data);
     }, error => {
       console.log(error);
@@ -416,7 +400,7 @@ export class ManageOrdersComponent implements OnInit {
       notes: JSON.stringify(this.orderDetail),
       status: JSON.stringify(this.orderStatus)
     };
-    this.api.post('orders/editList', param).then((data: any) => {
+    this.api.post_private('orders/editList', param).then((data: any) => {
       console.log('order', data);
       this.spinner.hide();
       if (data && data.status === 200) {
@@ -456,7 +440,7 @@ export class ManageOrdersComponent implements OnInit {
         notes: JSON.stringify(this.orderDetail),
         status: JSON.stringify(this.orderStatus),
       };
-      this.api.post('orders/editList', param).then((data: any) => {
+      this.api.post_private('orders/editList', param).then((data: any) => {
         console.log('order', data);
         this.spinner.hide();
         if (data && data.status === 200) {
@@ -514,7 +498,7 @@ export class ManageOrdersComponent implements OnInit {
           notes: JSON.stringify(this.orderDetail),
           status: JSON.stringify(this.orderStatus),
         };
-        this.api.post('orders/editList', param).then((data: any) => {
+        this.api.post_private('orders/editList', param).then((data: any) => {
           console.log('order', data);
           this.spinner.hide();
           this.updateDriver(this.driverId, 'active');
@@ -546,7 +530,7 @@ export class ManageOrdersComponent implements OnInit {
           notes: JSON.stringify(this.orderDetail),
           status: JSON.stringify(this.orderStatus),
         };
-        this.api.post('orders/editList', param).then((data: any) => {
+        this.api.post_private('orders/editList', param).then((data: any) => {
           console.log('order', data);
           this.spinner.hide();
           if (data && data.status === 200) {

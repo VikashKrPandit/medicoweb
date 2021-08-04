@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
@@ -72,23 +72,7 @@ export class ManagePaymentComponent implements OnInit {
     private route: ActivatedRoute,
     private navCtrl: Location
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     this.route.queryParams.subscribe((data) => {
       console.log(data);
       if (data && data.id) {
@@ -103,7 +87,7 @@ export class ManagePaymentComponent implements OnInit {
       id: this.id
     };
     this.spinner.show();
-    this.api.post('payments/getById', param).then((data: any) => {
+    this.api.post_private('payments/getById', param).then((data: any) => {
       console.log(data);
       this.spinner.hide();
       if (data && data.status === 200 && data.data.length) {
@@ -273,7 +257,7 @@ export class ManagePaymentComponent implements OnInit {
       };
     }
     this.spinner.show();
-    this.api.post('payments/editList', param).then((data) => {
+    this.api.post_private('payments/editList', param).then((data) => {
       this.spinner.hide();
       if (data && data.status === 200) {
         this.navCtrl.back();

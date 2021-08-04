@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -31,24 +31,7 @@ export class ManageUsersComponent implements OnInit {
     private toastyService: ToastyService,
     private router: Router
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      console.log('auth data->>', data);
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     this.route.queryParams.subscribe(data => {
       console.log(data);
       if (data && data.id) {
@@ -68,7 +51,7 @@ export class ManageUsersComponent implements OnInit {
     const param = {
       id: this.id
     };
-    this.api.post('users/getById', param).then((data: any) => {
+    this.api.post_private('users/getById', param).then((data: any) => {
       console.log('user info=>', data);
       if (data && data.status === 200 && data.data && data.data.length) {
         const info = data.data[0];
@@ -108,7 +91,7 @@ export class ManageUsersComponent implements OnInit {
       id: this.id
     }
     this.myaddress = [];
-    this.api.post('address/getByUid', param).then((data: any) => {
+    this.api.post_private('address/getByUid', param).then((data: any) => {
       console.log(data);
       if (data && data.status === 200 && data.data.length) {
         this.myaddress = data.data;
@@ -127,7 +110,7 @@ export class ManageUsersComponent implements OnInit {
     const param = {
       id: this.id
     }
-    this.api.post('orders/getByUid', param).then((data: any) => {
+    this.api.post_private('orders/getByUid', param).then((data: any) => {
       console.log(data);
       if (data && data.status === 200 && data.data.length > 0) {
         // this.orders = data.data;

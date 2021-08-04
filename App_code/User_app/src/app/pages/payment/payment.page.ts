@@ -337,7 +337,8 @@ export class PaymentPage implements OnInit {
       pay_key: key,
       status: JSON.stringify(orderStatus),
       assignee: '',
-      extra: JSON.stringify(this.cart.userOrderTaxByStores)
+      extra: JSON.stringify(this.cart.userOrderTaxByStores),
+      pscimage: this.util.pscimage
     }
 
     console.log('param----->', param);

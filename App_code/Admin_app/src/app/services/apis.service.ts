@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -110,37 +110,56 @@ export class ApisService {
       this.http.post(this.baseUrl + url, param, header).subscribe((data) => {
         resolve(data);
       }, error => {
-        resolve(error);
+        reject(error);
       });
       // return this.http.post(this.baseUrl + url, param, header);
     });
   }
 
-  public auth(body): Promise<any> {
+  public post_private(url, body): Promise<any> {
     return new Promise<any>((resolve, reject) => {
       const header = {
         headers: new HttpHeaders()
           .set('Content-Type', 'application/x-www-form-urlencoded')
-          .set('Basic', `${environment.authToken}`)
+          .set('Authorization', `Bearer ${localStorage.getItem('token')}`)
       };
       const param = this.JSON_to_URLEncoded(body);
       console.log(param);
-      this.http.post(this.baseUrl + 'users/getById', param, header).subscribe((data: any) => {
-        console.log(data);
-        if (data && data.status === 200 && data.data && data.data.length) {
-          if (data && data.data[0] && data.data[0].type && data.data[0].type === 'admin') {
-            resolve(true);
-          } else {
-            resolve(false);
-          }
-        } else {
-          resolve(false);
-        }
+      this.http.post(this.baseUrl + url, param, header).subscribe((data) => {
+        resolve(data);
       }, error => {
-        resolve(error);
+        reject(error);
       });
+      // return this.http.post(this.baseUrl + url, param, header);
     });
   }
+
+
+  // public auth(body): Promise<any> {
+  //   return new Promise<any>((resolve, reject) => {
+  //     const header = {
+  //       headers: new HttpHeaders()
+  //         .set('Content-Type', 'application/x-www-form-urlencoded')
+  //         .set('Basic', `${environment.authToken}`)
+  //     };
+  //     const param = this.JSON_to_URLEncoded(body);
+  //     console.log(param);
+  //     this.http.post(this.baseUrl + 'users/getById', param, header).subscribe((data: any) => {
+  //       console.log(data);
+  //       if (data && data.status === 200 && data.data && data.data.length) {
+  //         if (data && data.data[0] && data.data[0].type && data.data[0].type === 'admin') {
+  //           resolve(true);
+  //         } else {
+  //           reject(false);
+  //         }
+  //       } else {
+  //         reject(false);
+  //       }
+  //     }, error => {
+  //       reject(error);
+  //     });
+  //   });
+  // }
 
   public get(url): Promise<any> {
     return new Promise<any>((resolve, reject) => {
@@ -153,7 +172,22 @@ export class ApisService {
       this.http.get(this.baseUrl + url, header).subscribe((data) => {
         resolve(data);
       }, error => {
-        resolve(error);
+        reject(error);
+      });
+    });
+  }
+
+  public get_private(url): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      const header = {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+          .set('Authorization', `Bearer ${localStorage.getItem('token')}`)
+      };
+      this.http.get(this.baseUrl + url, header).subscribe((data) => {
+        resolve(data);
+      }, error => {
+        reject(error);
       });
     });
   }
@@ -168,7 +202,7 @@ export class ApisService {
       this.http.get(url, header).subscribe((data) => {
         resolve(data);
       }, error => {
-        resolve(error);
+        reject(error);
       });
     });
   }

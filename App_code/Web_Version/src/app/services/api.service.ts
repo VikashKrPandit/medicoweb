@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -100,6 +100,24 @@ export class ApiService {
     });
   }
 
+  public post_private(url, body): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      const header = {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+          .set('Authorization', `Bearer ${localStorage.getItem('token')}`)
+      };
+      const param = this.JSON_to_URLEncoded(body);
+      console.log(param);
+      this.http.post(this.baseUrl + url, param, header).subscribe((data) => {
+        resolve(data);
+      }, error => {
+        reject(error);
+      });
+      // return this.http.post(this.baseUrl + url, param, header);
+    });
+  }
+
   createOrderNotification(stores) {
     const ids = [...new Set(stores.map(item => item.token))];
     const apiCalls = [];
@@ -143,6 +161,21 @@ export class ApiService {
         resolve(data);
       }, error => {
         resolve(error);
+      });
+    });
+  }
+
+  public get_private(url): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
+      const header = {
+        headers: new HttpHeaders()
+          .set('Content-Type', 'application/x-www-form-urlencoded')
+          .set('Authorization', `Bearer ${localStorage.getItem('token')}`)
+      };
+      this.http.get(this.baseUrl + url, header).subscribe((data) => {
+        resolve(data);
+      }, error => {
+        reject(error);
       });
     });
   }

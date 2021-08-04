@@ -22,24 +22,7 @@ export class ManageWebsiteComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      console.log('auth data->>', data);
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     this.getCurrennt();
     this.getCategory();
   }
@@ -165,7 +148,7 @@ export class ManageWebsiteComponent implements OnInit {
 
       console.log('param', param);
       this.spinner.show();
-      this.api.post('settings/editList', param).then((data: any) => {
+      this.api.post_private('settings/editList', param).then((data: any) => {
         console.log('data', data);
         this.spinner.hide();
         if (data && data.status === 200) {
@@ -195,7 +178,7 @@ export class ManageWebsiteComponent implements OnInit {
 
       console.log('param', param);
       this.spinner.show();
-      this.api.post('settings/save', param).then((data: any) => {
+      this.api.post_private('settings/save', param).then((data: any) => {
         console.log('data', data);
         this.spinner.hide();
         if (data && data.status === 200) {

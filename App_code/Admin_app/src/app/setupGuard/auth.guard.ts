@@ -14,7 +14,7 @@ export class SetupAuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot): any {
     return this.api.get('users/get_admin').then((user: any) => {
       console.log('user', user);
-      if (user && user.status === 200 && user.data.id && user.data.type === 'admin') {
+      if (user && user.status === 200 && user.data.success === true) {
         return true;
       } else {
         this.router.navigate(['/setup']);

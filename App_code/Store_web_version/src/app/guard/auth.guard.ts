@@ -8,16 +8,36 @@ import { ApisService } from '../services/apis.service';
 })
 export class AuthGuard implements CanActivate {
 
-    constructor(private authServ: ApisService, private router: Router) { }
+    constructor(private api: ApisService, private router: Router) { }
 
-    canActivate(route: ActivatedRouteSnapshot): any {
-        ///// Less Secure but faster
-        const uid = localStorage.getItem('uid');
-        console.log('uid', localStorage.getItem('uid'));
-        if (uid && uid != null && uid !== 'null') {
-            return true;
-        }
-        this.router.navigate(['/login']);
-        return false;
+    canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+        return new Promise(res => {
+
+
+            this.api.post_private('users/validateStoreToken', {}).then(
+                (data: any) => {
+                    if (data && data.status === 200 && data.data && data.data.status === 200) {
+                        res(true);
+                    } else {
+                        localStorage.removeItem('uid');
+                        localStorage.removeItem('token');
+                        this.router.navigate(['/login']);
+                        res(false);
+                    }
+                },
+                (error) => {
+                    localStorage.removeItem('uid');
+                    localStorage.removeItem('token');
+                    this.router.navigate(['/login']);
+                    res(false);
+                }
+            ).catch(error => {
+                localStorage.removeItem('uid');
+                localStorage.removeItem('token');
+                this.router.navigate(['/login']);
+                res(false);
+            });
+
+        });
     }
 }

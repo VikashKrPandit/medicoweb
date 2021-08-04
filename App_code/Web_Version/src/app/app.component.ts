@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, ViewChild, HostListener, ChangeDetectorRef, ElementRef } from '@angular/core';
 import {
@@ -187,7 +187,7 @@ export class AppComponent {
       window.scrollTo({ top: 0 });
       const data = this.getTitle(this.router.routerState, this.router.routerState.root);
       console.log('--->>navigation data', data);
-      this.titleService.setTitle(data && data[0] ? this.util.translate(data[0]) + ' | Cure99' :
+      this.titleService.setTitle(data && data[0] ? this.util.translate(data[0]) + ' | Cure99 ' :
         this.util.translate('Home') + ' | Cure99');
     }
 
@@ -365,7 +365,7 @@ export class AppComponent {
               if (language) {
                 this.util.translations = language;
                 const trl = this.getTitle(this.router.routerState, this.router.routerState.root);
-                this.titleService.setTitle(trl && trl[0] ? this.util.translate(trl[0]) + ' | Cure99' :
+                this.titleService.setTitle(trl && trl[0] ? this.util.translate(trl[0]) + ' | Cure99 ' :
                   this.util.translate('Home') + ' | Cure99');
               }
               const settings = data.data.settings;
@@ -443,7 +443,7 @@ export class AppComponent {
       const param = {
         id: uid
       };
-      this.api.post('users/getById', param).then((data: any) => {
+      this.api.post_private('users/getById', param).then((data: any) => {
         console.log('user info=>', data);
         if (data && data.status === 200 && data.data && data.data.length) {
           this.util.userInfo = data.data[0];
@@ -558,21 +558,24 @@ export class AppComponent {
       console.log('login');
 
       this.isLogin = true;
-      this.api.post('users/login', this.login).then((data: any) => {
+      this.api.post('users/loginUser', this.login).then((data: any) => {
         this.isLogin = false;
         console.log(data);
         if (data && data.status === 200) {
-          if (data && data.data && data.data.type === 'user') {
-            if (data.data.status === '1') {
-              localStorage.setItem('uid', data.data.id);
-              this.util.userInfo = data.data;
+          if (data && data.data && data.data.data.type === 'user') {
+            if (data.data.data.status === '1') {
+              localStorage.setItem('uid', data.data.data.id);
+              localStorage.setItem('token', data.data.token);
+              this.login.email = '';
+              this.login.password = '';
+              this.util.userInfo = data.data.data;
               const fcm = localStorage.getItem('fcm');
               if (fcm && fcm !== null && fcm !== 'null') {
                 const updateParam = {
-                  id: data.data.id,
+                  id: data.data.data.id,
                   fcm_token: fcm
                 };
-                this.api.post('users/edit_profile', updateParam).then((data: any) => {
+                this.api.post_private('users/edit_profile', updateParam).then((data: any) => {
                   console.log('user info=>', data);
                 }, error => {
                   console.log(error);
@@ -580,9 +583,9 @@ export class AppComponent {
               }
 
               const favParam = {
-                id: data.data.id
+                id: data.data.data.id
               }
-              this.api.post('favourite/getByUid', favParam).then((data: any) => {
+              this.api.post_private('favourite/getByUid', favParam).then((data: any) => {
                 console.log('fav data', data);
                 if (data && data.status === 200 && data.data.length > 0) {
                   this.util.haveFav = true;
@@ -613,9 +616,9 @@ export class AppComponent {
                 background: 'white'
               }).then(status => {
                 if (status && status.value) {
-                  console.log('uiddd----<<<', data.data.id);
+                  console.log('uiddd----<<<', data.data.data.id);
                   this.id_chat = 0;
-                  this.uid_chat = data.data.id;
+                  this.uid_chat = data.data.data.id;
                   this.loaded_chat = false;
                   this.name = 'Support';
                   this.getInbox();
@@ -652,7 +655,7 @@ export class AppComponent {
       id: this.id_chat + '_' + this.uid_chat,
       oid: this.id_chat
     };
-    this.api.post('chats/getById', param).then((data: any) => {
+    this.api.post_private('chats/getById', param).then((data: any) => {
       console.log(data);
       this.loaded_chat = true;
       this.yourMessage = true;
@@ -696,7 +699,7 @@ export class AppComponent {
     };
     // this.myContent.scrollToBottom(300);
     this.yourMessage = false;
-    this.api.post('chats/save', param).then((data: any) => {
+    this.api.post_private('chats/save', param).then((data: any) => {
       console.log(data);
       if (data && data.status === 200) {
         this.getInbox();
@@ -727,21 +730,25 @@ export class AppComponent {
         password: this.mobile.password
       };
       this.isLogin = true;
-      this.api.post('users/loginWithPhoneAndPassword', param).then((data) => {
+      this.api.post('users/loginWithPhoneAndPasswordUser', param).then((data) => {
         this.isLogin = false;
         console.log(data);
         if (data && data.status === 200) {
-          if (data && data.data && data.data.type === 'user') {
-            if (data.data.status === '1') {
-              localStorage.setItem('uid', data.data.id);
-              this.util.userInfo = data.data;
+          if (data && data.data && data.data.data.type === 'user') {
+            if (data.data.data.status === '1') {
+              localStorage.setItem('uid', data.data.data.id);
+              localStorage.setItem('token', data.data.token);
+              this.mobile.phone = '';
+              this.mobile.password = '';
+
+              this.util.userInfo = data.data.data;
               const fcm = localStorage.getItem('fcm');
               if (fcm && fcm !== null && fcm !== 'null') {
                 const updateParam = {
-                  id: data.data.id,
+                  id: data.data.data.id,
                   fcm_token: fcm
                 };
-                this.api.post('users/edit_profile', updateParam).then((data: any) => {
+                this.api.post_private('users/edit_profile', updateParam).then((data: any) => {
                   console.log('user info=>', data);
                 }, error => {
                   console.log(error);
@@ -749,9 +756,9 @@ export class AppComponent {
               }
               modal.hide();
               const favParam = {
-                id: data.data.id
+                id: data.data.data.id
               }
-              this.api.post('favourite/getByUid', favParam).then((data: any) => {
+              this.api.post_private('favourite/getByUid', favParam).then((data: any) => {
                 console.log('fav data', data);
                 if (data && data.status === 200 && data.data.length > 0) {
                   this.util.haveFav = true;
@@ -783,7 +790,7 @@ export class AppComponent {
               }).then(status => {
                 if (status && status.value) {
                   this.id_chat = 0;
-                  this.uid_chat = data.data.id;
+                  this.uid_chat = data.data.data.id;
                   this.loaded_chat = false;
                   this.name = 'Support';
                   this.getInbox();
@@ -820,7 +827,7 @@ export class AppComponent {
   }
 
   otpLogin() {
-    console.log(this.userCode);
+    console.log('with mobile and otp', this.userCode);
     if (this.userCode === '' || !this.userCode) {
       this.util.errorMessage(this.util.translate('Not valid code'));
       return false;
@@ -838,20 +845,21 @@ export class AppComponent {
           const param = {
             id: this.uid
           };
-          this.api.post('users/getById', param).then((data: any) => {
+          this.api.post('users/getByIDAfterVerify', param).then((data: any) => {
             console.log('user data', data);
-            if (data && data.status === 200 && data.data && data.data.length && data.data[0].type === 'user') {
-              this.util.userInfo = data.data[0];
-              if (data && data.data && data.data[0].type === 'user') {
-                if (data.data[0].status === '1') {
+            if (data && data.status === 200 && data.data && data.data.data.length && data.data.data[0].type === 'user') {
+              this.util.userInfo = data.data.data[0];
+              if (data && data.data && data.data.data[0].type === 'user') {
+                if (data.data.data[0].status === '1') {
                   localStorage.setItem('uid', this.uid);
+                  localStorage.setItem('token', data.data.token);
                   const fcm = localStorage.getItem('fcm');
                   if (fcm && fcm !== null && fcm !== 'null') {
                     const updateParam = {
                       id: this.uid,
                       fcm_token: fcm
                     };
-                    this.api.post('users/edit_profile', updateParam).then((data: any) => {
+                    this.api.post_private('users/edit_profile', updateParam).then((data: any) => {
                       console.log('user info=>', data);
                     }, error => {
                       console.log(error);
@@ -862,7 +870,7 @@ export class AppComponent {
                   const favParam = {
                     id: this.uid
                   }
-                  this.api.post('favourite/getByUid', favParam).then((data: any) => {
+                  this.api.post_private('favourite/getByUid', favParam).then((data: any) => {
                     console.log('fav data', data);
                     if (data && data.status === 200 && data.data.length > 0) {
                       this.util.haveFav = true;
@@ -998,7 +1006,7 @@ export class AppComponent {
   }
 
   sendOTP() {
-    const message = 'Your Cure99  Verification code : ';
+    const message = 'Your Grocecryee app verification code : ';
     const param = {
       msg: message,
       to: '+' + this.registerForm.cc + this.registerForm.mobile
@@ -1081,15 +1089,16 @@ export class AppComponent {
             this.util.stop();
             console.log(data);
             if (data && data.status === 200) {
-              this.util.userInfo = data.data;
-              localStorage.setItem('uid', data.data.id);
+              this.util.userInfo = data.data.data;
+              localStorage.setItem('uid', data.data.data.id);
+              localStorage.setItem('token', data.data.token);
               const fcm = localStorage.getItem('fcm');
               if (fcm && fcm !== null && fcm !== 'null') {
                 const updateParam = {
                   id: data.data.id,
                   fcm_token: fcm
                 };
-                this.api.post('users/edit_profile', updateParam).then((data: any) => {
+                this.api.post_private('users/edit_profile', updateParam).then((data: any) => {
                   console.log('user info=>', data);
                 }, error => {
                   console.log(error);
@@ -1202,15 +1211,16 @@ export class AppComponent {
           this.isLogin = false;
           console.log(data);
           if (data && data.status === 200) {
-            this.util.userInfo = data.data;
-            localStorage.setItem('uid', data.data.id);
+            this.util.userInfo = data.data.data;
+            localStorage.setItem('uid', data.data.data.id);
+            localStorage.setItem('token', data.data.token);
             const fcm = localStorage.getItem('fcm');
             if (fcm && fcm !== null && fcm !== 'null') {
               const updateParam = {
-                id: data.data.id,
+                id: data.data.data.id,
                 fcm_token: fcm
               };
-              this.api.post('users/edit_profile', updateParam).then((data: any) => {
+              this.api.post_private('users/edit_profile', updateParam).then((data: any) => {
                 console.log('user info=>', data);
               }, error => {
                 console.log(error);

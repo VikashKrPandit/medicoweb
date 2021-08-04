@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { ApisService } from 'src/app/services/apis.service';
@@ -50,23 +50,7 @@ export class ManageOrdersComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private router: Router
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     this.route.queryParams.subscribe((data) => {
       console.log(data);
       if (data && data.id) {
@@ -90,7 +74,7 @@ export class ManageOrdersComponent implements OnInit {
     const param = {
       id: this.id
     };
-    this.api.post('orders/getById', param).then((data: any) => {
+    this.api.post_private('orders/getById', param).then((data: any) => {
       console.log(data);
       this.spinner.hide();
       this.loaded = true;
@@ -154,7 +138,7 @@ export class ManageOrdersComponent implements OnInit {
               const userinfo = {
                 id: this.driverId
               };
-              this.api.post('drivers/getDriversData', userinfo).then((data: any) => {
+              this.api.post_private('drivers/getDriversData', userinfo).then((data: any) => {
                 console.log('driverid>', data);
                 if (data && data.status === 200 && data.data && data.data.length) {
                   this.driverInfo = data.data;

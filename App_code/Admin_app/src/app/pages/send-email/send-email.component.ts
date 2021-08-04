@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { ToastyService, ToastData, ToastOptions } from 'ng2-toasty';
@@ -30,24 +30,7 @@ export class SendEmailComponent implements OnInit {
     private navCtrl: Location,
     private router: Router
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      console.log('auth data->>', data);
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
   }
 
   ngOnInit(): void {
@@ -66,7 +49,7 @@ export class SendEmailComponent implements OnInit {
     console.log(param);
     console.log('send mail');
     this.spinner.show();
-    this.api.post('users/adminEmails', param).then((data) => {
+    this.api.post_private('users/adminEmails', param).then((data) => {
       console.log(data);
       this.spinner.hide();
       this.success('mail sent');

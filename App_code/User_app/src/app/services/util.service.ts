@@ -36,6 +36,7 @@ export class UtilService {
   public direction: any;
   public currecny: any;
   public cside: any;
+  public pscimage: any;
   public userInfo: any;
   public selectedCity = new Subject<any>();
   public city: any;

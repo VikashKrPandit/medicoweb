@@ -1,12 +1,12 @@
 import { Location } from '@angular/common';
 /*
- Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -615,7 +615,7 @@ export class ManageProductsComponent implements OnInit {
     console.log('*****', param);
 
     this.spinner.show();
-    this.api.post('products/save', param).then((data: any) => {
+    this.api.post_private('products/save', param).then((data: any) => {
       console.log(data);
       this.spinner.hide();
       if (data && data.status === 200) {
@@ -630,6 +630,7 @@ export class ManageProductsComponent implements OnInit {
       console.log('error', error);
     });
   }
+
   submit() {
     console.log('size-->>', this.size);
     console.log('submited', this.veg);
@@ -718,7 +719,7 @@ export class ManageProductsComponent implements OnInit {
     console.log('*****', param);
 
     this.spinner.show();
-    this.api.post('products/editList', param).then((data: any) => {
+    this.api.post_private('products/editList', param).then((data: any) => {
       console.log(data);
       this.spinner.hide();
       if (data && data.status === 200) {

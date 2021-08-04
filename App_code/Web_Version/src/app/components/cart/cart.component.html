@@ -1,4 +1,3 @@
-
 <!--
    Authors : initappz (Rahul Jograna)
   Website : https://initappz.com/
@@ -511,7 +510,7 @@
         </div>
       </div>
 
-      <!-- Start file upload -->
+       <!-- Start file upload -->
       <div class="cart_box">
         <div class="header_flex"><label class="head_lbl">Prescription</label></div>
         <div class="round_image"
@@ -523,7 +522,6 @@
         </div>
       </div>
       <!-- End file upload -->
-
 
       <div class="cart_box">
         <div class="header_flex">
@@ -634,7 +632,7 @@
       </div>
       <div class="btn_div">
         <button type="button" class="btn" (click)="prev()">{{util.translate('Back')}}</button>
-        <button type="button" class="btn" *ngIf="util.pscimage" (click)="next()">{{util.translate('Make Payment')}}</button>
+        <button type="button" class="btn"  *ngIf="util.pscimage" (click)="next()">{{util.translate('Make Payment')}}</button>
       </div>
 
     </div>
@@ -643,9 +641,9 @@
   <div class="row" *ngIf="tabID == 3">
     <div class="col-lg-7">
 
-      <div class="payPalBtn" *ngIf="cart.havePayment && cart.havePayPal">
+      <!-- <div class="payPalBtn" *ngIf="cart.havePayment && cart.havePayPal">
         <ngx-paypal [config]="payPalConfig"></ngx-paypal>
-      </div>
+      </div> -->
       <div class="radioBtns">
         <div class="flexer" (click)="payMethod('cod')" *ngIf="cart.havePayment && cart.haveCOD">
           <div class="checkMark" *ngIf="payMethods=='cod'">
@@ -655,14 +653,14 @@
           <img src="assets/imgs/cod.png" class="imgs" />
         </div>
 
-        <div class="flexer" (click)="payMethod('stripe')" *ngIf="cart.havePayment && cart.haveStripe">
+        <!-- <div class="flexer" (click)="payMethod('stripe')" *ngIf="cart.havePayment && cart.haveStripe"> -->
           <!-- <img src="assets/check.png" alt="" class="checkMark" *ngIf="payMethods=='stripe'"> -->
-          <div class="checkMark" *ngIf="payMethods=='stripe'">
-            <i class="fas fa-check-circle arrow"></i>
-          </div>
-          <p class="payName"> {{util.translate('Pay with Stripe')}} </p>
-          <img src="assets/imgs/stripe.png" class="imgs" />
-        </div>
+          <!-- <div class="checkMark" *ngIf="payMethods=='stripe'"> -->
+            <!-- <i class="fas fa-check-circle arrow"></i> -->
+          <!-- </div> -->
+          <!-- <p class="payName"> {{util.translate('Pay with Stripe')}} </p> -->
+          <!-- <img src="assets/imgs/stripe.png" class="imgs" /> -->
+        <!-- </div> -->
 
         <div class="flexer" (click)="payMethod('razor')" *ngIf="cart.havePayment && cart.haveRazor">
           <!-- <img src="assets/check.png" alt="" class="checkMark" *ngIf="payMethods=='razor'"> -->
@@ -682,32 +680,32 @@
           <img src="assets/imgs/paytmlogo.png" class="imgs" />
         </div>
 
-        <div class="flexer" (click)="payMethod('instamojo')" *ngIf="cart.havePayment && cart.haveInstamojo">
+        <!-- <div class="flexer" (click)="payMethod('instamojo')" *ngIf="cart.havePayment && cart.haveInstamojo"> -->
           <!-- <img src="assets/check.png" alt="" class="checkMark" *ngIf="payMethods=='instamojo'"> -->
-          <div class="checkMark" *ngIf="payMethods=='instamojo'">
-            <i class="fas fa-check-circle arrow"></i>
-          </div>
-          <p class="payName"> {{util.translate('Pay with Instamojo')}} </p>
-          <img src="assets/imgs/instalogos.png" class="imgs" />
-        </div>
+          <!-- <div class="checkMark" *ngIf="payMethods=='instamojo'"> -->
+            <!-- <i class="fas fa-check-circle arrow"></i> -->
+          <!-- </div> -->
+          <!-- <p class="payName"> {{util.translate('Pay with Instamojo')}} </p> -->
+          <!-- <img src="assets/imgs/instalogos.png" class="imgs" /> -->
+        <!-- </div> -->
 
-        <div class="flexer" (click)="payMethod('paystacks')" *ngIf="cart.havePayment && cart.havePayStack">
+        <!-- <div class="flexer" (click)="payMethod('paystacks')" *ngIf="cart.havePayment && cart.havePayStack"> -->
           <!-- <img src="assets/check.png" alt="" class="checkMark" *ngIf="payMethods=='paystacks'"> -->
-          <div class="checkMark" *ngIf="payMethods=='paystacks'">
-            <i class="fas fa-check-circle arrow"></i>
-          </div>
-          <p class="payName"> {{util.translate('Pay with PayStacks')}} </p>
-          <img src="assets/imgs/paystack.png" class="imgs" />
-        </div>
+          <!-- <div class="checkMark" *ngIf="payMethods=='paystacks'"> -->
+            <!-- <i class="fas fa-check-circle arrow"></i> -->
+          <!-- </div> -->
+          <!-- <p class="payName"> {{util.translate('Pay with PayStacks')}} </p> -->
+          <!-- <img src="assets/imgs/paystack.png" class="imgs" /> -->
+        <!-- </div> -->
 
-        <div class="flexer" (click)="payMethod('flutterPay')" *ngIf="cart.havePayment && cart.haveFlutterwave">
+        <!-- <div class="flexer" (click)="payMethod('flutterPay')" *ngIf="cart.havePayment && cart.haveFlutterwave"> -->
           <!-- <img src="assets/check.png" alt="" class="checkMark" *ngIf="payMethods=='flutterPay'"> -->
-          <div class="checkMark" *ngIf="payMethods=='flutterPay'">
-            <i class="fas fa-check-circle arrow"></i>
-          </div>
-          <p class="payName"> {{util.translate('Pay with Flutterwave')}} </p>
-          <img src="assets/imgs/flutter.png" class="imgs" />
-        </div>
+          <!-- <div class="checkMark" *ngIf="payMethods=='flutterPay'"> -->
+            <!-- <i class="fas fa-check-circle arrow"></i> -->
+          <!-- </div> -->
+          <!-- <p class="payName"> {{util.translate('Pay with Flutterwave')}} </p> -->
+          <!-- <img src="assets/imgs/flutter.png" class="imgs" /> -->
+        <!-- </div> -->
 
       </div>
 

@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -142,7 +142,7 @@ export class FlutterwavecallbackComponent implements OnInit {
     console.log('param----->', param);
 
     this.util.start();
-    this.api.post('orders/save', param).then((data: any) => {
+    this.api.post_private('orders/save', param).then((data: any) => {
       console.log(data);
       this.util.stop();
       localStorage.removeItem('cartItems');

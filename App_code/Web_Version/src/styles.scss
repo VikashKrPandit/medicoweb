@@ -5,13 +5,7 @@
 .navbar {
   background-color: #f5f5f5 !important;
 }
-.sub-cat{
-    margin: 5px;
-    color: purple;
-}
-.header-back{
-  
-}
+
 .navbar.navbar-dark .navbar-nav .nav-item .nav-link {
   color: black !important;
 }
@@ -181,6 +175,7 @@ body {
       background-repeat: no-repeat;
       padding: 100px;
       padding-right: 20px;
+      box-shadow: 0 6px 12px 4px rgb(40 11 18 / 15%);
       .discount_badge {
         position: absolute;
         left: 10px;

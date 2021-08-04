@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
@@ -29,23 +29,7 @@ export class BannersComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastyService: ToastyService,
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     this.getBanners();
   }
 
@@ -131,7 +115,7 @@ export class BannersComponent implements OnInit {
           status: item.status === '1' ? 0 : 1
         };
         this.spinner.show();
-        this.api.post('banners/editList', param).then((info) => {
+        this.api.post_private('banners/editList', param).then((info) => {
           this.spinner.hide();
           this.getBanners();
         }, error => {

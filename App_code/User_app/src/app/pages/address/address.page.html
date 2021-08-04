@@ -71,6 +71,25 @@
       </div>
     </div>
   </div>
+
+
+
+
+   
+
+
+
+
+  <div class="main_content_div">
+    <div class="main_div">
+      <div class="info_div">
+        <div class="user_img" [ngStyle]="{'background-image':'url('+api.mediaURL+pscimage+'),url(assets/imgs/user.png)'}"
+          (click)="uploadPriscription()">
+        </div>
+      </div>
+    </div>
+  </div>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="selectedAddress" (click)="selectAddress()">
     <ion-fab-button>
       <ion-icon name="arrow-forward-outline"></ion-icon>

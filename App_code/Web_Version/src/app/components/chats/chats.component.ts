@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { NavigationExtras, Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
@@ -50,7 +50,7 @@ export class ChatsComponent implements OnInit {
       id: localStorage.getItem('uid')
     };
     this.dummy = Array(10);
-    this.api.post('chats/getByGroup', param).then((data: any) => {
+    this.api.post_private('chats/getByGroup', param).then((data: any) => {
       console.log(data);
       if (data && data.status === 200) {
         const info = [];
@@ -64,7 +64,7 @@ export class ChatsComponent implements OnInit {
         const uid = {
           id: uniq.join()
         };
-        this.api.post('stores/getChatsNames', uid).then((uids: any) => {
+        this.api.post_private('stores/getChatsNames', uid).then((uids: any) => {
           this.dummy = [];
           console.log(uids);
           if (uids && uids.status === 200) {
@@ -116,7 +116,7 @@ export class ChatsComponent implements OnInit {
       id: this.id + '_' + this.uid,
       oid: this.id
     };
-    this.api.post('chats/getById', param).then((data: any) => {
+    this.api.post_private('chats/getById', param).then((data: any) => {
       console.log(data);
       this.loaded = true;
       this.yourMessage = true;
@@ -163,7 +163,7 @@ export class ChatsComponent implements OnInit {
     };
     // this.myContent.scrollToBottom(300);
     this.yourMessage = false;
-    this.api.post('chats/save', param).then((data: any) => {
+    this.api.post_private('chats/save', param).then((data: any) => {
       console.log(data);
       if (data && data.status === 200) {
         this.getInbox();

@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
@@ -30,23 +30,7 @@ export class EmailsComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private toastyService: ToastyService,
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
     this.getCategory();
   }
 
@@ -56,7 +40,7 @@ export class EmailsComponent implements OnInit {
   getCategory() {
     this.mails = [];
     this.dummy = Array(10);
-    this.api.get('contacts').then((datas: any) => {
+    this.api.get_private('contacts').then((datas: any) => {
       console.log(datas);
       this.dummy = [];
       if (datas && datas.data && datas.data.length) {
@@ -141,44 +125,6 @@ export class EmailsComponent implements OnInit {
       return 'btn btn-danger btn-round';
     }
     return 'btn btn-warning btn-round';
-  }
-
-
-  changeStatus(item) {
-    const text = item.status === '1' ? 'deactive' : 'active';
-    Swal.fire({
-      title: this.api.translate('Are you sure?'),
-      text: this.api.translate('To ') + text + this.api.translate(' this category!'),
-      icon: 'question',
-      showConfirmButton: true,
-      confirmButtonText: this.api.translate('Yes'),
-      showCancelButton: true,
-      cancelButtonText: this.api.translate('Cancle'),
-      backdrop: false,
-      background: 'white'
-    }).then((data) => {
-      if (data && data.value) {
-        console.log('update it');
-        const query = item.status === '1' ? '0' : '1';
-        const param = {
-          id: item.id,
-          status: query
-        };
-        this.spinner.show();
-        this.api.post('mails/editList', param).then((datas) => {
-          this.spinner.hide();
-          this.getCategory();
-        }, error => {
-          this.spinner.hide();
-          this.error(this.api.translate('Something went wrong'));
-          console.log(error);
-        }).catch(error => {
-          this.spinner.hide();
-          console.log(error);
-          this.error(this.api.translate('Something went wrong'));
-        });
-      }
-    });
   }
 
   view(item) {

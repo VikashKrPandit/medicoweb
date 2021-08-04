@@ -1,12 +1,12 @@
 import { ActivatedRoute, Router } from '@angular/router';
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit } from '@angular/core';
 import { ToastData, ToastOptions, ToastyService } from 'ng2-toasty';
@@ -39,23 +39,7 @@ export class ManageOffersComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    const param = {
-      id: localStorage.getItem('uid')
-    }
-    this.api.auth(param).then((data) => {
-      if (data !== true) {
-        localStorage.removeItem('uid');
-        this.router.navigate(['login']);
-      }
-    }, error => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    }).catch((error) => {
-      console.log(error);
-      localStorage.removeItem('uid');
-      this.router.navigate(['login']);
-    });
+
   }
 
   ngOnInit(): void {
@@ -85,7 +69,7 @@ export class ManageOffersComponent implements OnInit {
     };
 
     this.spinner.show();
-    this.api.post('offers/save', param).then((data: any) => {
+    this.api.post_private('offers/save', param).then((data: any) => {
       console.log(data);
       this.spinner.hide();
       if (data && data.status === 200) {

@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -71,6 +71,7 @@ export class CartComponent implements OnInit {
   addCard: boolean;
   today: any;
   nextDay: any;
+  pscimage: any = '';
 
   offerName: any;
   address_id: any;
@@ -98,7 +99,6 @@ export class CartComponent implements OnInit {
   cvc: any = '';
   date: any = '';
   email: any = '';
-  pscimage: any = '';
   constructor(
     private router: Router,
     public api: ApiService,
@@ -127,40 +127,6 @@ export class CartComponent implements OnInit {
     this.pscimage = '';
   }
 
-  // Start prescription
-  prescriptionUpload(files) {
-    console.log('fle', files);
-    if (files.length === 0) {
-      return;
-    }
-    const mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      return;
-    }
-
-    if (files) {
-      console.log('ok');
-      this.util.start();
-      this.api.uploadFile(files).subscribe((data: any) => {
-        console.log('==>>', data);
-        this.util.stop();
-        if (data && data.status === 200 && data.data) {
-          this.util.pscimage = data.data
-        }
-      }, err => {
-        console.log(err);
-        this.util.stop();
-      });
-    } else {
-      console.log('no');
-    }
-  }
-
-  getPrescription() {
-    return this.util.pscimage ? this.api.mediaURL + this.util.pscimage : ''
-  }
-  // End prescription
-
   ngOnInit(): void {
   }
   private smoothScrollTop(): void {
@@ -175,7 +141,7 @@ export class CartComponent implements OnInit {
 
 
   getPayments() {
-    this.api.get('payments').then((data: any) => {
+    this.api.get_private('payments/getPaymentList').then((data: any) => {
       console.log(data);
       if (data && data.status === 200 && data.data) {
         const info = data.data.filter(x => x.status === '1');
@@ -633,7 +599,7 @@ export class CartComponent implements OnInit {
     console.log('param----->', param);
 
     this.util.start();
-    this.api.post('orders/save', param).then((data: any) => {
+    this.api.post_private('orders/save', param).then((data: any) => {
       console.log(data);
       this.util.stop();
       this.api.createOrderNotification(this.cart.stores);
@@ -671,7 +637,7 @@ export class CartComponent implements OnInit {
       id: localStorage.getItem('uid')
     };
     this.myaddress = [];
-    this.api.post('address/getByUid', param).then((data: any) => {
+    this.api.post_private('address/getByUid', param).then((data: any) => {
       console.log('addreess------------', data);
       if (data && data.status === 200 && data.data.length) {
         this.myaddress = data.data;
@@ -890,7 +856,7 @@ export class CartComponent implements OnInit {
         const param = {
           id: item.id
         };
-        this.api.post('address/deleteList', param).then(info => {
+        this.api.post_private('address/deleteList', param).then(info => {
           console.log(info);
           this.util.stop();
           this.getAddress();
@@ -939,7 +905,7 @@ export class CartComponent implements OnInit {
           pincode: this.pincode
         };
 
-        this.api.post('address/save', param).then((data: any) => {
+        this.api.post_private('address/save', param).then((data: any) => {
           this.util.stop();
           if (data && data.status === 200) {
             // this.navCtrl.back();
@@ -1019,7 +985,7 @@ export class CartComponent implements OnInit {
           pincode: this.pincode
         };
 
-        this.api.post('address/editList', param).then((data: any) => {
+        this.api.post_private('address/editList', param).then((data: any) => {
           this.util.stop();
           this.cd.detectChanges();
           if (data && data.status === 200) {
@@ -1121,6 +1087,16 @@ export class CartComponent implements OnInit {
     console.log('deliveryadddress', this.selectedAddress);
     this.cart.deliveryAt = this.deliveryOption;
     this.cart.datetime = this.datetime;
+    if (this.cart.totalPrice < this.cart.minOrderPrice) {
+      let text;
+      if (this.util.cside === 'left') {
+        text = this.util.currecny + ' ' + this.cart.minOrderPrice;
+      } else {
+        text = this.cart.minOrderPrice + ' ' + this.util.currecny;
+      }
+      this.util.errorMessage(this.util.getString('Minimum order amount must be') + text + this.util.getString('or more'));
+      return false;
+    }
     if (this.tabID === 1 && this.deliveryOption === 'home') {
       this.getAddress();
       this.tabID = 2;
@@ -1135,7 +1111,6 @@ export class CartComponent implements OnInit {
     } else if (!this.selectedAddress) {
       this.util.errorMessage(this.util.translate('Please select address'));
     }
-    
     this.smoothScrollTop();
     this.cart.calcuate();
   }
@@ -1345,15 +1320,49 @@ export class CartComponent implements OnInit {
     }
   }
 
+   // Start prescription
+  prescriptionUpload(files) {
+    console.log('fle', files);
+    if (files.length === 0) {
+      return;
+    }
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    if (files) {
+      console.log('ok');
+      this.util.start();
+      this.api.uploadFile(files).subscribe((data: any) => {
+        console.log('==>>', data);
+        this.util.stop();
+        if (data && data.status === 200 && data.data) {
+          this.util.pscimage = data.data
+        }
+      }, err => {
+        console.log(err);
+        this.util.stop();
+      });
+    } else {
+      console.log('no');
+    }
+  }
+
+  getPrescription() {
+    return this.util.pscimage ? this.api.mediaURL + this.util.pscimage : ''
+  }
+  // End prescription
+
   updateUser(param) {
     this.util.start();
-    this.api.post('users/edit_profile', param).then((data: any) => {
+    this.api.post_private('users/edit_profile', param).then((data: any) => {
       this.util.stop();
       console.log(data);
       const getParam = {
         id: localStorage.getItem('uid')
       };
-      this.api.post('users/getById', getParam).then((data: any) => {
+      this.api.post_private('users/getById', getParam).then((data: any) => {
         console.log('user info=>', data);
         if (data && data.status === 200 && data.data && data.data.length) {
           this.util.userInfo = data.data[0];

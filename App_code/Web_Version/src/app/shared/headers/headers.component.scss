@@ -97,17 +97,17 @@
 .lower_divsub {
   background-color: #ffffff;
   width: 100%;
+  color: #421b9e;
   word-spacing: 50px;
   height: 50px;
   display: flex;
   align-items: center;
 
-
   li {
     cursor: pointer;
-    color: black;
     padding-right: 15px;
     padding-left: 15px;
+    color: #421b9e !important;
     font-size: 14px;
 
     a {

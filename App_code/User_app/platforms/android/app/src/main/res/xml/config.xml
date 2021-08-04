@@ -85,9 +85,9 @@
         <param name="android-package" value="cordova.plugins.Diagnostic_External_Storage" />
         <param name="onload" value="true" />
     </feature>
-    <name>Groceryee</name>
-    <description>initappz.</description>
-    <author email="info@mellowcorporation.com" href="https://mellowcorporation.com/">initappz</author>
+    <name>Cure99</name>
+    <description>Cure99.</description>
+    <author email="info@Cure99.in" href="https://cure99.in/">Cure99</author>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

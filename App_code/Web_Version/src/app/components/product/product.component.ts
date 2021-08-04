@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
@@ -240,7 +240,7 @@ export class ProductComponent implements OnInit {
       };
       this.util.haveFav = true;
       console.log('parama', param);
-      this.api.post('favourite/editList', param).then((data: any) => {
+      this.api.post_private('favourite/editList', param).then((data: any) => {
         console.log('save response', data);
         if (data && data.status !== 200) {
           this.util.errorMessage(this.util.translate('Something went wrong'));
@@ -264,7 +264,7 @@ export class ProductComponent implements OnInit {
         };
         this.util.haveFav = true;
         console.log('parama', param)
-        this.api.post('favourite/editList', param).then((data: any) => {
+        this.api.post_private('favourite/editList', param).then((data: any) => {
           console.log('save response', data);
           if (data && data.status !== 200) {
             this.util.errorMessage(this.util.translate('Something went wrong'));
@@ -284,7 +284,7 @@ export class ProductComponent implements OnInit {
         };
         this.util.haveFav = true;
         console.log('parama', param);
-        this.api.post('favourite/save', param).then((data: any) => {
+        this.api.post_private('favourite/save', param).then((data: any) => {
           console.log('save response', data);
           if (data && data.status !== 200) {
             this.util.errorMessage(this.util.translate('Something went wrong'));

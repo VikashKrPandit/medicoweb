@@ -251,9 +251,9 @@
               <div class="desc_div" (click)="openStore(item)">
                 <ion-label class="pro_name">
                   {{ (item.name.length>12)? (item.name | slice:0:12)+'..':(item.name) }}</ion-label>
-                <ion-label class="pro_detail">
+                <!-- <ion-label class="pro_detail">
                   {{ (item.address.length>20)? (item.address | slice:0:20)+'..':(item.address) }}
-                </ion-label>
+                </ion-label> -->
                 <ion-label class="price_lbl"> {{getTime(item.open_time)}} - {{getTime(item.close_time)}} </ion-label>
 
                 <div class="small_flex">

@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
@@ -13,7 +13,7 @@
 
 export const environment = {
   production: false,
-  baseURL: 'http://api.cure99.in/index.php/',
+    baseURL: 'http://api.cure99.in/index.php/',
   mediaURL: 'http://api.cure99.in/uploads/',
   onesignal: {
     appId: '017de731-2275-4fe7-8ada-913e7fc46ba1',

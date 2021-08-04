@@ -1,11 +1,11 @@
 /*
- Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import * as moment from 'moment';
@@ -84,9 +84,10 @@ export class DashboardComponent implements OnInit {
 
   getData() {
     const param = {
-      id: localStorage.getItem('uid')
+      id: localStorage.getItem('uid'),
+      limit: 50000
     };
-    this.api.post('orders/getByStoreWithNames', param).then((data: any) => {
+    this.api.post_private('orders/getByStoreForApps', param).then((data: any) => {
       console.log(data);
       this.dummy = [];
       this.orders = [];
@@ -215,7 +216,7 @@ export class DashboardComponent implements OnInit {
           assignee: JSON.stringify(this.assignee)
         };
         console.log('===================================', param);
-        this.api.post('orders/editList', param).then((data: any) => {
+        this.api.post_private('orders/editList', param).then((data: any) => {
           console.log('order', data);
           this.spinner.hide();
           this.updateDriver(this.drivers[0].id, 'busy');
@@ -239,7 +240,7 @@ export class DashboardComponent implements OnInit {
         id: this.util.storeInfo.cid
       };
       this.spinner.show();
-      this.api.post('drivers/geyByCity', param).then((data: any) => {
+      this.api.post_private('drivers/geyByCity', param).then((data: any) => {
         console.log('driver data--------------->>', data);
         this.spinner.hide();
         if (data && data.status === 200 && data.data.length) {
@@ -301,7 +302,7 @@ export class DashboardComponent implements OnInit {
       const userinfo = {
         id: item.uid
       };
-      this.api.post('users/getById', userinfo).then((data: any) => {
+      this.api.post_private('users/getById', userinfo).then((data: any) => {
         console.log('user info=>', data);
         if (data && data.status === 200 && data.data && data.data.length) {
           this.userInfo = data.data[0];
@@ -359,7 +360,7 @@ export class DashboardComponent implements OnInit {
           notes: JSON.stringify(this.orderDetail),
           status: JSON.stringify(this.orderStatus),
         };
-        this.api.post('orders/editList', param).then((data: any) => {
+        this.api.post_private('orders/editList', param).then((data: any) => {
           console.log('order', data);
           this.spinner.hide();
           this.getData();
@@ -399,7 +400,7 @@ export class DashboardComponent implements OnInit {
           notes: JSON.stringify(this.orderDetail),
           status: JSON.stringify(this.orderStatus),
         };
-        this.api.post('orders/editList', param).then((data: any) => {
+        this.api.post_private('orders/editList', param).then((data: any) => {
           console.log('order', data);
           this.spinner.hide();
           this.getData();
@@ -431,7 +432,7 @@ export class DashboardComponent implements OnInit {
           notes: JSON.stringify(this.orderDetail),
           status: JSON.stringify(this.orderStatus),
         };
-        this.api.post('orders/editList', param).then((data: any) => {
+        this.api.post_private('orders/editList', param).then((data: any) => {
           console.log('order', data);
           this.spinner.hide();
           this.getData();
@@ -468,7 +469,7 @@ export class DashboardComponent implements OnInit {
       current: value
     };
     console.log('param', param);
-    this.api.post('drivers/edit_profile', param).then((data: any) => {
+    this.api.post_private('drivers/edit_profile', param).then((data: any) => {
       console.log(data);
     }, error => {
       console.log(error);
@@ -490,7 +491,7 @@ export class DashboardComponent implements OnInit {
       notes: JSON.stringify(this.orderDetail),
       status: JSON.stringify(this.orderStatus)
     };
-    this.api.post('orders/editList', param).then((data: any) => {
+    this.api.post_private('orders/editList', param).then((data: any) => {
       console.log('order', data);
       this.spinner.hide();
       if (data && data.status === 200) {

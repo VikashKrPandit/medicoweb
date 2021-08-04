@@ -1,11 +1,11 @@
 /*
-  Authors : MellowCorp
-  Website : https://mellowcoporation.com/
-  App Name : Ecommerce
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : ionic 5 groceryee app
   Created : 10-Sep-2020
   This App Template Source code is licensed as per the
-  terms found in the Website https://mellowcorporation.com/
-  Copyright and Good Faith © 2020-present Mellowcorp.
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2020-present initappz.
 */
 @import "../../../variables.scss";
 .controls-top {
@@ -25,6 +25,7 @@ label {
     display: flex;
     align-items: center;
     height: 500px;
+    margin-top:40px;
     overflow: hidden;
 
     .slider_div {
@@ -32,6 +33,7 @@ label {
       overflow: scroll;
       box-sizing: content-box;
       min-width: 120px;
+
 
       .slider_box {
         height: 100px;
@@ -112,6 +114,7 @@ label {
 
   .product_detail {
     margin-bottom: 16px;
+    margin-top: 45px;
 
     .pro_name {
       font-weight: 700;
